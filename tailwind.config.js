@@ -4,7 +4,14 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage : {
+        'bg-chat' : "url('/public/images/svg/bg-chat.svg')"
+      },
+      borderWidth : {
+        '1' : '1px'
+      }
+    },
   },
   plugins: [],
 }
