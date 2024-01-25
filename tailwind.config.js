@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage : {
-        'bg-chat' : "url('/public/images/svg/bg-chat.svg')"
+        'bg-chat' : "url('/public/images/png/bg-chat.png')"
       },
       borderWidth : {
         '1' : '1px'
