@@ -101,9 +101,9 @@ export default function Index() {
                     {/* End Chat */}
                     {/* Start Input Chat */}
                     <div className=" flex justify-between items-center w-full ">
-                        <input type="text" placeholder='Message' className='  w-full h-16 px-3 outline-none border-t-1 border-zinc-200 bg-white ' />
-                        <button className='absolute right-5 '>
-                            <RiSendPlaneFill className='  text-blue-600 text-3xl' />
+                        <input type="text" placeholder='Message' className='  w-full h-11 px-3  outline-none border-t-1 border-zinc-200 bg-white ' />
+                        <button className='absolute right-5 bottom-2 '>
+                            <RiSendPlaneFill className='  text-blue-600 text-2xl' />
                         </button>
                     </div>
                     {/* End Input Chat */}
