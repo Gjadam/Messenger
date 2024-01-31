@@ -12,9 +12,11 @@ module.exports = {
       },
       borderWidth : {
         '1' : '1px'
-      }
+      },
+      
     },
   },
+  darkMode: 'class',
   plugins: [],
 }
 
