@@ -22,9 +22,9 @@ export default function Landing() {
                         <Link to="/chat" className=' bg-sky-500 rounded-full px-4 py-1 text-white hover:text-sky-500 hover:bg-transparent transition-colors'>
                             <span className=' flex items-center'><TbExternalLink className=' mr-1' /> Open ChatOnly Web</span>
                         </Link>
-                        <a href="" className=' bg-sky-100 rounded-full px-4 py-1 text-gray-700 md:text-base text-sm hover:text-sky-500 hover:bg-transparent transition-colors'>
+                        <Link to="/download" className=' bg-sky-100 rounded-full px-4 py-1 text-gray-700 md:text-base text-sm hover:text-sky-500 hover:bg-transparent transition-colors'>
                             <span className=' flex items-center'><HiOutlineDownload className=' mr-1' /> Download ChatOnly Desktop for PC</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div className=" md:hidden mb-10">
