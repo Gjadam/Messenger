@@ -2,25 +2,12 @@ import React from 'react'
 import { TbExternalLink } from "react-icons/tb";
 import { HiOutlineDownload } from "react-icons/hi";
 import { IoMdArrowDropright } from "react-icons/io";
-import LandingNavItem from '../../Components/Modules/LandingNavItem/LandingNavItem';
 import { Link } from 'react-router-dom';
+import NavBar from '../../Components/Templates/NavBar/NavBar';
 export default function Landing() {
     return (
         <div className=' h-svh flex md:overflow-hidden'>
-            {/* Start NavBar */}
-            <div className=" fixed top-0 right-0 left-0  z-50  container m-auto p-8 flex justify-between items-center ">
-                <div className=" flex items-center ">
-                    <LandingNavItem text={"Login"}  />
-                    <LandingNavItem text={"Sign up"} />
-                </div>
-                <a href='' className=" hidden md:block">
-                    <img src="/images/png/logo.png" alt="logo" className=' w-32' />
-                </a>
-                <a href='' className=" block md:hidden">
-                    <img src="/images/png/landing-logo.png" alt="logo" className=' w-10' />
-                </a>
-            </div>
-            {/* End NavBar */}
+            <NavBar />
             {/* Start Main */}
             <div className=" flex justify-center items-center flex-wrap md:mt-0 mt-10 md:w-1/2 w-full h-full relative after:hidden  after:md:block after:absolute after:-right-10 after:-top-5 after:h-[90rem] after:w-32 after:rotate-6 after:bg-white after:z-10 bg-transparent before:absolute before:w-full before:h-96 before:-top-64 md:before:-top-44 before:bg-radial-gradient-left before:z-30">
                 <div className="  container-fluid  z-20 text-center md:text-start md:ms-5">
