@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../../Components/Modules/NavBar/NavBar'
+import NavBarChat from '../../Components/Modules/NavBarChat/NavBarChat'
 import Contact from '../../Components/Modules/Contact/Contact'
 import { FaUserCircle } from "react-icons/fa";
 import { RiSendPlaneFill } from "react-icons/ri";
@@ -33,7 +33,7 @@ export default function Index() {
 
     return (
         <>
-            <NavBar />
+            <NavBarChat />
             <div className=" flex h-svh ">
             {/* Start SideBar */}
                 <form className=" w-96 md:block hidden bg-white border-r-1 border-zinc-200  dark:bg-zinc-900 dark:border-zinc-950">
