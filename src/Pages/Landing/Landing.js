@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { TbExternalLink } from "react-icons/tb";
 import { HiOutlineDownload } from "react-icons/hi";
-import { IoMdArrowDropright } from "react-icons/io";
+import { MdLogin } from "react-icons/md";
+import AuthContext from '../../context/authContext'
 import { Link } from 'react-router-dom';
 import NavBar from '../../Components/Templates/NavBar/NavBar';
 export default function Landing() {
+
+    const authContext = useContext(AuthContext)
+
+
+
     return (
         <div className=' h-svh flex md:overflow-hidden'>
             <NavBar />
@@ -19,9 +25,18 @@ export default function Landing() {
                         <span className=' text-2xl text-gray-600'>A new era in communication</span>
                     </div>
                     <div className=" flex justify-center md:justify-start items-center flex-wrap gap-2 mt-7  ">
-                        <Link to="/chat" className=' bg-sky-500 rounded-full px-4 py-1 text-white hover:text-sky-500 hover:bg-transparent transition-colors'>
-                            <span className=' flex items-center'><TbExternalLink className=' mr-1' /> Open ChatOnly Web</span>
-                        </Link>
+                        {
+                            authContext.isLoggedIn ? (
+                                <Link to="/chat" className=' bg-sky-500 rounded-full px-4 py-1 text-white hover:text-sky-500 hover:bg-transparent transition-colors'>
+                                    <span className=' flex items-center'><TbExternalLink className=' mr-1' /> Open ChatOnly Web</span>
+                                </Link>
+
+                            ) : (
+                                <Link to="/login" className=' bg-sky-500 rounded-full px-4 py-1 text-white hover:text-sky-500 hover:bg-transparent transition-colors'>
+                                    <span className=' flex items-center'><MdLogin className=' mr-1 ' /> Go to Login page</span>
+                                </Link>
+                            )
+                        }
                         <Link to="/download" className=' bg-sky-100 rounded-full px-4 py-1 text-gray-700 md:text-base text-sm hover:text-sky-500 hover:bg-transparent transition-colors'>
                             <span className=' flex items-center'><HiOutlineDownload className=' mr-1' /> Download ChatOnly Desktop for PC</span>
                         </Link>
