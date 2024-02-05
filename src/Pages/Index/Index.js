@@ -86,16 +86,18 @@ export default function Index() {
                         <div className=" max-w-96 rounded-e-xl rounded-bl-3xl bg-blue-600 text-white  px-3 pb-6 pt-3 my-2 relative">
                             <span className=' text-wrap'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi error facilis quam eos aspernatur impedit beatae nam iusto? Commodi enim libero veritatis ducimus quis repudiandae expedita nemo. Voluptatem, vitae illo.</span>
                             <span className=' absolute bottom-1 right-3 text-xs'>12:11</span>
+                            <IoCheckmarkDoneOutline className=' absolute bottom-1 right-11 text-lg text-blue-200' />
                         </div>
                         <div className=" max-w-96 rounded-e-xl rounded-bl-3xl bg-blue-600 text-white  px-3 pb-6 pt-3 my-2 relative">
                             <span className=' text-wrap'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi error facilis quam eos aspernatur impedit beatae nam iusto? Commodi enim libero veritatis ducimus quis repudiandae expedita nemo. Voluptatem, vitae illo.</span>
                             <span className=' absolute bottom-1 right-3 text-xs'>12:11</span>
+                            <IoCheckmarkDoneOutline className=' absolute bottom-1 right-11 text-lg text-blue-200' />
                         </div>
                         {/* Contact Chats  */}
                         <div className=" self-end max-w-96 rounded-s-xl rounded-br-3xl bg-zinc-600 text-white px-3 pb-6 pt-3 my-2 relative">
                             <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem nihil doloremque dolorum quisquam inventore. Corrupti quia debitis reiciendis nostrum earum odit esse, aliquid doloribus modi officiis quo nemo et eaque.</span>
                             <span className=' absolute bottom-1 left-3 text-xs'>12:11</span>
-                            <IoCheckmarkDoneOutline className=' absolute bottom-1 left-11 text-lg text-blue-400' />
+                            
                         </div>
                     </div>
                     {/* End Chat */}
