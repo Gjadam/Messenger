@@ -1,10 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { LuUser2 } from "react-icons/lu";
 import { FiMoreVertical } from "react-icons/fi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { IoMdSettings } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthContext from '../../../context/authContext';
+import Swal from 'sweetalert2';
 export default function NavBar() {
+
+    const authContext = useContext(AuthContext)
+    const navigate = useNavigate()
+
 
     // Dark Mode Logic
     useEffect(() => {
@@ -33,6 +39,27 @@ export default function NavBar() {
         }
     }
 
+    const logOut = () => {
+        Swal.fire({
+          title: "Do you want to Log out?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: "You have successfully logged out.",
+              icon: "success"
+            }).then(() => {
+              authContext.logout()
+              navigate('/')
+            })
+          }
+        });
+      }
+
     return (
         <>
             <div className="  flex justify-between items-center p-2 md:p-5 z-30 bg-blue-600 border-b-1 border-zinc-200 dark: dark:bg-zinc-950 dark:border-zinc-900">
@@ -50,7 +77,7 @@ export default function NavBar() {
                             <span className=' text-sm'>Username</span>
                             <LuUser2 className='text-xl text-blue-600' />
                         </div>
-                        <div className="flex justify-end items-center  gap-2 p-3 group  cursor-pointer hover:bg-red-100 transition-colors">
+                        <div className="flex justify-end items-center  gap-2 p-3 group  cursor-pointer hover:bg-red-100 transition-colors" onClick={logOut}>
                             <span className=' group-hover:text-red-600 text-sm'>Logout</span>
                             <RiLogoutCircleRLine className='text-xl text-red-600' />
                         </div>
