@@ -3,6 +3,7 @@ import { LuUser2 } from "react-icons/lu";
 import { FiMoreVertical } from "react-icons/fi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { IoMdSettings } from "react-icons/io";
+import { Link } from 'react-router-dom';
 export default function NavBar() {
 
     // Dark Mode Logic
@@ -35,9 +36,9 @@ export default function NavBar() {
     return (
         <>
             <div className="  flex justify-between items-center p-2 md:p-5 z-30 bg-blue-600 border-b-1 border-zinc-200 dark: dark:bg-zinc-950 dark:border-zinc-900">
-                <div className=' flex'>
+                <Link to={'/'} className=' flex'>
                     <img src="/images/png/logo.png" class=" w-32 " alt="FlowBite Logo" />
-                </div>
+                </Link>
                 <div className="group relative ">
                     <FiMoreVertical className='  text-white text-xl cursor-pointer ' />
                     <div className=" opacity-0 hidden group-hover:block  group-hover:opacity-100 absolute right-2 top-5 w-44  rounded-md z-50  shadow bg-white overflow-hidden  dark:bg-zinc-950 dark:text-white">
