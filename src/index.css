@@ -3,9 +3,16 @@ body {
   font-family: "OpenSans" !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* overflow: hidden; */
+  overflow-x: hidden;
 }
 
+::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2563eb;
+}
 
 /* Start Loader Page */
 
