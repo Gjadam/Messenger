@@ -5,6 +5,7 @@ import { MdLogin } from 'react-icons/md'
 import { BiSolidPencil } from "react-icons/bi";
 import { TbExternalLink } from 'react-icons/tb';
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { Link } from 'react-router-dom';
 export default function NavBar() {
 
   const authContext = useContext(AuthContext)
@@ -17,7 +18,7 @@ export default function NavBar() {
         {
           authContext.isLoggedIn ? (
             <>
-              <LandingNavItem text={"Open Chat"} icon={<TbExternalLink className=' mr-1 ' />} href={"/chat"} />
+              <LandingNavItem text={"Open Chat"} icon={<TbExternalLink className=' mr-1 ' />} href={"/chat/id"} />
               <LandingNavItem text={"Logout"} icon={<RiLogoutCircleRLine className=' mr-1 ' />} href={"/"} />
 
             </>
@@ -29,12 +30,12 @@ export default function NavBar() {
           )
         }
       </div>
-      <a href='' className=" hidden md:block">
+      <Link to='/' className=" hidden md:block">
         <img src="/images/png/logo.png" alt="logo" className=' w-32' />
-      </a>
-      <a href='' className=" block md:hidden">
+      </Link>
+      <Link to='/' className=" block md:hidden">
         <img src="/images/png/landing-logo.png" alt="logo" className=' w-10' />
-      </a>
+      </Link>
     </div>
   )
 }
