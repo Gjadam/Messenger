@@ -7,6 +7,7 @@ import { IoClose } from "react-icons/io5";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import AuthContext from '../../context/authContext';
+import SideBar from '../../Components/Modules/SideBar/SideBar';
 
 export default function Index() {
 
@@ -37,32 +38,22 @@ export default function Index() {
     return (
         <>
             <NavBarChat />
-            <div className=" flex h-svh md:h-[92.7vh] ">
-            {/* Start SideBar */}
-                <form className=" w-96 md:block hidden bg-white border-r-1 border-zinc-200  dark:bg-zinc-900 dark:border-zinc-950">
-                    <input type="search" placeholder='Search' className=' w-full border-b-1 outline-none px-5 py-6 dark:bg-zinc-900 dark:border-zinc-950 dark:text-white' />
-                    <Contact />
-                    <Contact />
-                    <Contact />
-                    <Contact />
-                    <Contact />
+            <div className=" flex h-svh ">
+                {/* Start SideBar */}
+                <form className=" w-96 md:block hidden overflow-auto bg-white border-r-1 border-zinc-200  dark:bg-zinc-900 dark:border-zinc-950" onSubmit={(e) => e.preventDefault()}>
+                    <SideBar />
                 </form>
-            {/* End SideBar */}
-            {/* Start SideBar For Mobile */}
-                <form className="side-bar w-0 opacity-0 invisible md:invisible fixed left-0 bottom-0 top-0 z-40 bg-white  transition-all dark:bg-zinc-900">
+                {/* End SideBar */}
+                {/* Start SideBar For Mobile */}
+                <form className="side-bar w-0 opacity-0 invisible md:invisible overflow-auto fixed left-0 bottom-0 top-0 z-40 bg-white  transition-all dark:bg-zinc-900" onSubmit={(e) => e.preventDefault()}>
                     <div className=" flex justify-between items-center p-2  bg-blue-600 dark:bg-zinc-950">
                         <img src="/images/png/logo.png" class=" w-32 " alt="FlowBite Logo" />
-                        <IoClose className='text-4xl text-white hover:text-red-700 transition-colors cursor-pointer' onClick={closeSideBar}/>
+                        <IoClose className='text-4xl text-white hover:text-red-700 transition-colors cursor-pointer' onClick={closeSideBar} />
                     </div>
-                    <input type="search" placeholder='Search' className=' w-full border-b-1 outline-none px-5 py-6  dark:bg-zinc-900 dark:border-zinc-950 dark:text-white' />
-                    <Contact />
-                    <Contact />
-                    <Contact />
-                    <Contact />
-                    <Contact />
+                    <SideBar />
                 </form>
-            {/* End SideBar For Mobile */}
-                <div className=" flex justify-between  items-start flex-col  w-full  bg-contain bg-zinc-200 dark:bg-zinc-950 relative">
+                {/* End SideBar For Mobile */}
+                <div className=" flex justify-between  items-start flex-col  w-full  bg-contain bg-zinc-100 dark:bg-zinc-950 relative">
                     {/* Start User Information */}
                     <div className=" flex  justify-between items-center   w-full p-3 z-10 bg-white dark:bg-zinc-900 dark:text-white">
                         <div className=" flex items-center">
@@ -100,7 +91,7 @@ export default function Index() {
                         <div className=" self-end max-w-96 rounded-s-xl rounded-br-3xl bg-zinc-600 text-white px-3 pb-6 pt-3 my-2 relative">
                             <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem nihil doloremque dolorum quisquam inventore. Corrupti quia debitis reiciendis nostrum earum odit esse, aliquid doloribus modi officiis quo nemo et eaque.</span>
                             <span className=' absolute bottom-1 left-3 text-xs'>12:11</span>
-                            
+
                         </div>
                     </div>
                     {/* End Chat */}
