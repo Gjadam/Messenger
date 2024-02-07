@@ -44,7 +44,7 @@ export default function Login() {
                             icon: "success",
                             title: "logged in successfully"
                         }).then(() => {
-                            navigate('/chat')
+                            navigate('/chat/id')
                         })
                         return res.json()
                     } else {
