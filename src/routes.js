@@ -6,13 +6,8 @@ import NotFound from './Pages/NotFound/NotFound'
 import SignUp from "./Pages/SignUp/SignUp";
 const routes = [
     { path: '/', element: <Landing /> },
-    {
-        path: '/chat',
-        element:
-            <PrivateChat>
-                <Index />
-            </PrivateChat>
-    },
+    // { path: '/chat', element: <Index />},
+    { path: '/chat/:chatID', element: <Index />},
     { path: '/login', element: <Login /> },
     { path: '/sign-up', element: <SignUp /> },
     { path: '*', element: <NotFound /> },
