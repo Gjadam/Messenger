@@ -62,7 +62,7 @@ export default function NavBar() {
 
     return (
         <>
-            <div className="  flex justify-between items-center p-2 md:p-5 z-30 bg-blue-600 border-b-1 border-zinc-200 dark: dark:bg-zinc-950 dark:border-zinc-900">
+            <div className=" flex justify-between items-center p-2 z-30 bg-blue-600 dark:dark:bg-zinc-950">
                 <Link to={'/'} className=' flex'>
                     <img src="/images/png/logo.png" class=" w-32 " alt="FlowBite Logo" />
                 </Link>
