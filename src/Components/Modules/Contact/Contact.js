@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaUserCircle } from "react-icons/fa";
+import { PiUserCircleFill } from "react-icons/pi";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import Swal from 'sweetalert2';
 import { NavLink } from 'react-router-dom';
@@ -37,9 +37,9 @@ export default function Contact({ userID, username, lastOnline, type }) {
     return (
         <>
             <NavLink to={`/chat/${userID}`} className={(Link) => Link.isActive && ' block bg-blue-500 text-white dark:bg-zinc-700'}>
-                <div className=" flex justify-between items-center   py-3 px-5 hover:bg-blue-300 hover:text-white transition-colors dark:text-white dark:hover:bg-zinc-800">
+                <div className=" flex justify-between items-center py-3 px-5 border-b-1 dark:border-zinc-950 hover:bg-blue-300 hover:text-white transition-colors dark:text-white dark:hover:bg-zinc-800">
                     <div className=" flex justify-start items-center gap-2">
-                        <FaUserCircle className='text-4xl text-blue-700 dark:text-gray-300' />
+                        <PiUserCircleFill className='text-4xl text-blue-700 dark:text-gray-300' />
                         <div className=" flex flex-col ">
                             <span className=' font-bold'>{username.slice(0, 15)}{username.length > 15 && "..."}</span>
                             <span className=' text-xs text-zinc-500'>{lastOnline}</span>
@@ -48,7 +48,7 @@ export default function Contact({ userID, username, lastOnline, type }) {
                     {
                         type === 'search' &&
                         <div className="" onClick={addToContact}>
-                            <button className=' flex items-center text-blue-700 ' ><AiOutlineUserAdd className=' text-2xl' /></button>
+                            <button className=' flex items-center p-0.5 text-blue-600 border-2 border-blue-600 rounded-full  hover:bg-blue-600 hover:text-white  transition-colors' ><AiOutlineUserAdd className=' text-2xl' /></button>
                         </div>
                     }
                 </div>
