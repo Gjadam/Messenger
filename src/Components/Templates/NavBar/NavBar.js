@@ -18,7 +18,7 @@ export default function NavBar() {
         {
           authContext.isLoggedIn ? (
             <>
-              <LandingNavItem text={"Open Chat"} icon={<TbExternalLink className=' mr-1 ' />} href={"/chat/id"} />
+              <LandingNavItem text={"Open Chat"} icon={<TbExternalLink className=' mr-1 ' />} href={"/chat"} />
               <LandingNavItem text={"Logout"} icon={<RiLogoutCircleRLine className=' mr-1 ' />} href={"/"} />
 
             </>
