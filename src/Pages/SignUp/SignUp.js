@@ -30,13 +30,12 @@ export default function SignUp() {
         body: JSON.stringify(newUserInfo)
       })
         .then(res => {
-          console.log(res);
           if (res.ok) {
             const Toast = Swal.mixin({
               toast: true,
               position: "top-end",
               showConfirmButton: false,
-              timer: 1500,
+              timer: 800,
               timerProgressBar: true,
               didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;
@@ -47,7 +46,7 @@ export default function SignUp() {
               icon: "success",
               title: "Signed in successfully"
             }).then(() => {
-              navigate('/chat/id')
+              navigate('/chat')
             })
             return res.json()
           } else {
