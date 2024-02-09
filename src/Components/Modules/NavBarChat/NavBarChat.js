@@ -12,6 +12,7 @@ export default function NavBar() {
     const navigate = useNavigate()
 
 
+
     // Dark Mode Logic
     useEffect(() => {
         window.onload = function () {
@@ -40,25 +41,9 @@ export default function NavBar() {
     }
 
     const logOut = () => {
-        Swal.fire({
-          title: "Do you want to Log out?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes!"
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              title: "You have successfully logged out.",
-              icon: "success"
-            }).then(() => {
-              authContext.logout()
-              navigate('/')
-            })
-          }
-        });
-      }
+        authContext.logout()
+        navigate('/')
+    }
 
     return (
         <>
@@ -74,7 +59,7 @@ export default function NavBar() {
                             <IoMdSettings className='text-xl text-gray-600' />
                         </div>
                         <div className="flex justify-end items-center  gap-2 p-3">
-                            <span className=' text-sm'>Username</span>
+                            <span className=' text-sm'>{authContext.userInfos.username}</span>
                             <LuUser2 className='text-xl text-blue-600' />
                         </div>
                         <div className="flex justify-end items-center  gap-2 p-3 group  cursor-pointer hover:bg-red-100 transition-colors" onClick={logOut}>
