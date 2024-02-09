@@ -27,7 +27,7 @@ export default function Landing() {
                     <div className=" flex justify-center md:justify-start items-center flex-wrap gap-2 mt-7  ">
                         {
                             authContext.isLoggedIn ? (
-                                <Link to="/chat/id" className=' bg-sky-500 rounded-full px-4 py-1 text-white hover:text-sky-500 hover:bg-transparent transition-colors'>
+                                <Link to="/chat" className=' bg-sky-500 rounded-full px-4 py-1 text-white hover:text-sky-500 hover:bg-transparent transition-colors'>
                                     <span className=' flex items-center'><TbExternalLink className=' mr-1' /> Open ChatOnly Web</span>
                                 </Link>
 
