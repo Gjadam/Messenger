@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Contact from '../Contact/Contact'
 import { MdErrorOutline } from "react-icons/md";
-import { BsEmojiSmile } from "react-icons/bs";
+import { RiChatSmile2Line } from "react-icons/ri";
 import { NavLink } from 'react-router-dom';
 export default function SideBar() {
     const [searchValue, setSearchValue] = useState('')
@@ -48,7 +48,7 @@ export default function SideBar() {
     return (
         <>
             <div className="">
-                <input type="search" placeholder='Search' onChange={(e) => setSearchValue(e.target.value)} className='  sticky top-0 w-full border-b-1 outline-none px-5 py-6 dark:bg-zinc-900 dark:border-zinc-950 dark:text-white' />
+                <input type="search" placeholder='Search' onChange={(e) => setSearchValue(e.target.value)} className=' sticky top-0 w-full border-b-1 outline-none px-5 py-6 dark:bg-zinc-900 dark:border-zinc-950 dark:text-white' />
                 {
                     searchValue.length ? (
                         searchData.length > 0 ? (
@@ -76,7 +76,7 @@ export default function SideBar() {
                                     ))
                                 ) : (
                                     <div className=" flex justify-center items-center flex-col gap-2 mt-10 p-5">
-                                        <BsEmojiSmile className=' text-zinc-700 text-6xl dark:text-zinc-300' />
+                                        <RiChatSmile2Line className=' text-zinc-700 text-6xl dark:text-zinc-300' />
                                         <span className=' text-zinc-700 font-bold text-center dark:text-zinc-300'>You have no contacts on OnlyChat yet</span>
                                         <ul className=' list-disc mt-3'>
                                             <li className='text-zinc-500 dark:text-zinc-400 text-sm leading-6'>Search people by username </li>
