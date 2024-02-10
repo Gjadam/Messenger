@@ -3,7 +3,7 @@ import NavBarChat from '../../Components/Modules/NavBarChat/NavBarChat'
 import { PiUserCircleFill } from "react-icons/pi";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
-import { FaBarsStaggered } from "react-icons/fa6";
+import { RiMenuUnfoldLine } from "react-icons/ri";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { RiChatOffLine } from "react-icons/ri";
 import SideBar from '../../Components/Modules/SideBar/SideBar';
@@ -55,27 +55,27 @@ export default function Index() {
     return (
         <>
             <NavBarChat />
-            <div className=" flex h-svh ">
+            <div className=" flex min-h-screen h-full  ">
                 {/* Start SideBar */}
-                <form className=" w-96 md:block hidden overflow-auto bg-white border-r-1 border-zinc-200  dark:bg-zinc-900 dark:border-zinc-950" onSubmit={(e) => e.preventDefault()}>
+                <form className=" w-96 md:block hidden overflow-auto bg-white dark:bg-zinc-900 " onSubmit={(e) => e.preventDefault()}>
                     <SideBar />
                 </form>
                 {/* End SideBar */}
                 {/* Start SideBar For Mobile */}
                 <form className="side-bar w-0 opacity-0 invisible md:invisible overflow-auto fixed left-0 bottom-0 top-0 z-40 bg-white  transition-all dark:bg-zinc-900" onSubmit={(e) => e.preventDefault()}>
                     <div className=" flex justify-between items-center p-2  bg-blue-600 dark:bg-zinc-950">
-                        <img src="/images/png/logo.png" class=" w-32 " alt="FlowBite Logo" />
-                        <IoClose className='text-4xl text-white hover:text-red-700 transition-colors cursor-pointer' onClick={closeSideBar} />
+                        <img src="/images/png/landing-logo.png" class=" w-8 " alt="FlowBite Logo" />
+                        <IoClose className='text-2xl text-white hover:text-red-700 transition-colors cursor-pointer' onClick={closeSideBar} />
                     </div>
                     <SideBar />
                 </form>
                 {/* End SideBar For Mobile */}
-                <div className={` flex ${contactDatas.id ? 'justify-between' : 'justify-start'} items-start flex-col  w-full  bg-contain bg-zinc-100 dark:bg-zinc-950 relative`}>
+                <div className={` flex ${contactDatas.id ? 'justify-between' : 'justify-start'} items-start flex-col  w-full  bg-contain bg-zinc-50 dark:bg-zinc-950 relative`}>
                     {/* Start User Information */}
                     <div className={` flex ${contactDatas.id ? 'justify-between' : 'justify-end'}   items-center   w-full  z-10 bg-white dark:bg-zinc-900 dark:text-white`}>
                         {
                             contactDatas.id &&
-                            <div className=" flex items-center p-3">
+                            <div className=" flex items-center px-3 py-1">
                                 <PiUserCircleFill className='text-5xl text-blue-600 dark:text-zinc-300' />
                                 <div className=" flex flex-col ms-2 gap-1">
                                     <span className=' font-bold'>{contactDatas.username}</span>
@@ -90,7 +90,7 @@ export default function Index() {
                             </div>
                         }
                         <div className="md:hidden p-3" onClick={openSideBar}>
-                            <FaBarsStaggered className=' text-2xl text-blue-600 cursor-pointer' />
+                            <RiMenuUnfoldLine className=' text-2xl text-blue-600 hover:text-blue-500 dark:text-zinc-500 dark:hover:text-zinc-600  transition-colors cursor-pointer' />
                         </div>
                     </div>
                     {/* End User Information */}
@@ -119,8 +119,8 @@ export default function Index() {
                                 {/* End Chat */}
                                 {/* Start Input Chat */}
                                 <div className=" flex justify-between items-center w-full ">
-                                    <input type="text" placeholder='Message' className='  w-full p-4 h-full  outline-none border-t-1 border-b-0 border-zinc-200 bg-white dark:bg-zinc-900 dark:border-zinc-950 dark:text-white' />
-                                    <button className='absolute right-3 bottom-3 '>
+                                    <input type="text" placeholder='Message' className='  w-full p-4 h-full rounded-full mx-2  outline-none bg-white dark:bg-zinc-900 dark:text-white' />
+                                    <button className='absolute right-6 bottom-3 '>
                                         <RiSendPlaneFill className='  text-blue-600 text-2xl' />
                                     </button>
                                 </div>
@@ -129,9 +129,9 @@ export default function Index() {
                             </>
                         ) : (
                             <div className=" flex justify-center items-center flex-col h-full w-full text-center bg-zinc-100 dark:bg-zinc-950 gap-2 p-5">
-                                <RiChatOffLine className=' text-zinc-700  text-9xl dark:text-zinc-300' />
-                                <span className=' text-zinc-700 text-2xl font-bold text-center dark:text-zinc-300'>No chat messages</span>
-                                <span className='text-zinc-500 text-lg dark:text-zinc-400 text-sm leading-6'>Start conversing to see your messages here.</span>
+                                <RiChatOffLine className=' text-zinc-700  text-6xl dark:text-zinc-300' />
+                                <span className=' text-zinc-700 text-xl font-bold text-center dark:text-zinc-300'>No chat messages</span>
+                                <span className='text-zinc-500 text-sm dark:text-zinc-400  leading-6'>Start conversing to see your messages here.</span>
                             </div>
                         )
                     }
