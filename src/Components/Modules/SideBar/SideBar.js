@@ -48,7 +48,7 @@ export default function SideBar() {
     return (
         <>
             <div className="">
-                <input type="search" placeholder='Search' onChange={(e) => setSearchValue(e.target.value)} className=' sticky top-0 w-full border-b-1 outline-none px-5 py-6 dark:bg-zinc-900 dark:border-zinc-950 dark:text-white' />
+                <input type="search" placeholder='Search' onChange={(e) => setSearchValue(e.target.value)} className=' rounded-full sticky top-0  w-full outline-none px-5 py-2 my-2 bg-zinc-100 dark:bg-zinc-800 dark:text-white' />
                 {
                     searchValue.length ? (
                         searchData.length > 0 ? (
