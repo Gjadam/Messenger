@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import NavBarChat from '../../Components/Modules/NavBarChat/NavBarChat'
 import { PiUserCircleFill } from "react-icons/pi";
-import { RiSendPlaneFill } from "react-icons/ri";
+import { IoMdSend } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { RiMenuUnfoldLine } from "react-icons/ri";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
@@ -118,10 +118,10 @@ export default function Index() {
                                 </div>
                                 {/* End Chat */}
                                 {/* Start Input Chat */}
-                                <div className=" flex justify-between items-center w-full ">
+                                <div className=" flex justify-between items-center w-full mb-2 ">
                                     <input type="text" placeholder='Message' className='  w-full p-4 h-full rounded-full mx-2  outline-none bg-white dark:bg-zinc-900 dark:text-white' />
-                                    <button className='absolute right-6 bottom-3 '>
-                                        <RiSendPlaneFill className='  text-blue-600 text-2xl' />
+                                    <button className='absolute right-6 bottom-4.5 '>
+                                        <IoMdSend className='  text-blue-600 text-2xl' />
                                     </button>
                                 </div>
                                 {/* End Input Chat */}
