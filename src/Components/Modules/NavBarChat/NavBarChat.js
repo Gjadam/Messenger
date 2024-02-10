@@ -47,12 +47,12 @@ export default function NavBar() {
 
     return (
         <>
-            <div className=" flex justify-between items-center p-2 z-30 bg-blue-600 dark:dark:bg-zinc-950">
+            <div className=" flex justify-between items-center p-2 z-30 bg-zinc-50 dark:dark:bg-zinc-950">
                 <Link to={'/'} className=' flex'>
-                    <img src="/images/png/logo.png" class=" w-32 " alt="FlowBite Logo" />
+                    <img src="/images/png/landing-logo.png" class=" w-8 " alt="FlowBite Logo" />
                 </Link>
                 <div className="group relative ">
-                    <FiMoreVertical className='  text-white text-xl cursor-pointer ' />
+                    <FiMoreVertical className='  text-black dark:text-white text-2xl cursor-pointer ' />
                     <div className=" opacity-0 hidden group-hover:block  group-hover:opacity-100 absolute right-2 top-5 w-44  rounded-md z-50  shadow bg-white overflow-hidden  dark:bg-zinc-950 dark:text-white">
                         <div className="flex justify-end items-center  gap-2 p-3 font-bold bg-gray-50 border-b-1  dark:bg-zinc-900 dark:text-white dark:border-zinc-950">
                             <span>Options</span>
