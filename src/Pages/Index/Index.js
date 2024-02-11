@@ -208,7 +208,7 @@ export default function Index() {
                                 {/* End Chat */}
                                 {/* Start Input Chat */}
                                 <form className=" relative flex justify-between items-center w-full mb-2 " onSubmit={(event) => sendMessage(event)}>
-                                    <div className={` flex justify-center items-center absolute  right-5 bottom-12 bg-zinc-600  shadow-xl dark:bg-zinc-100 h-11 w-11 rounded-full z-50 cursor-pointer ${chatScrollTarget < 1000 ? 'opacity-100 visible  -translate-y-5' : ' opacity-0 invisible  translate-y-5'} transition-all`} onClick={scrollToEnd}>
+                                    <div className={` flex justify-center items-center absolute  right-5 bottom-12 bg-zinc-600  shadow-xl dark:bg-zinc-100 h-11 w-11 rounded-full  cursor-pointer ${chatScrollTarget < 1000 ? 'opacity-100 visible  -translate-y-5' : ' opacity-0 invisible  translate-y-5'} transition-all`} onClick={scrollToEnd}>
                                         <IoIosArrowDown className=' mt-1 text-3xl text-zinc-100 dark:text-blue-600' />
                                     </div>
                                     <input type="text" placeholder='Message' value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} className='  w-full p-4 h-full rounded-full mx-2  outline-none bg-white dark:bg-zinc-900 dark:text-white' />
