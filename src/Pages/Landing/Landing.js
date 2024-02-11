@@ -24,7 +24,7 @@ export default function Landing() {
                         <span className=' text-4xl font-bold'>ChatOnly</span>
                         <span className=' text-2xl text-gray-600'>A new era in communication</span>
                     </div>
-                    <div className=" flex justify-center md:justify-start items-center flex-wrap gap-2 mt-7  ">
+                    <div className=" flex justify-center md:justify-start items-center text-sm flex-wrap gap-2 mt-7  ">
                         {
                             authContext.isLoggedIn ? (
                                 <Link to="/chat" className=' bg-sky-500 rounded-full px-4 py-1 text-white hover:text-sky-500 hover:bg-transparent transition-colors'>
@@ -37,7 +37,7 @@ export default function Landing() {
                                 </Link>
                             )
                         }
-                        <Link to="/download" className=' bg-sky-100 rounded-full px-4 py-1 text-gray-700 md:text-base text-sm hover:text-sky-500 hover:bg-transparent transition-colors'>
+                        <Link to="/download" className=' bg-sky-100 rounded-full px-4 py-1 text-gray-700  hover:text-sky-500 hover:bg-transparent transition-colors'>
                             <span className=' flex items-center'><HiOutlineDownload className=' mr-1' /> Download ChatOnly Desktop for PC</span>
                         </Link>
                     </div>
@@ -53,7 +53,7 @@ export default function Landing() {
             </div>
             {/* End Main */}
             {/* Start Footer */}
-            <div className=" fixed bottom-2 left-2 font-bold text-center z-50">
+            <div className=" fixed bottom-1 left-1 font-bold text-center z-50">
                 <span className=' text-sm ' >
                     &copy; Created By
                     <a href="https://github.com/Gjadam" className=' mx-1 hover:text-sky-500 transition-colors'>
