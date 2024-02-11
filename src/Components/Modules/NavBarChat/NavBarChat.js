@@ -1,16 +1,17 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { LuUser2 } from "react-icons/lu";
 import { FiMoreVertical } from "react-icons/fi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { IoMdSettings } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom';
+import { IoIosMoon } from "react-icons/io";
+import { GrSun } from "react-icons/gr";
 import AuthContext from '../../../context/authContext';
-import Swal from 'sweetalert2';
 export default function NavBar() {
 
     const authContext = useContext(AuthContext)
     const navigate = useNavigate()
-
+    const [isDark, setIsDark] = useState(false)
 
 
     // Dark Mode Logic
@@ -34,9 +35,11 @@ export default function NavBar() {
         if (e.target.checked) {
             htmlTag.classList.add("dark")
             localStorage.setItem('theme', 'dark')
+            setIsDark(true)
         } else {
             htmlTag.classList.remove("dark")
             localStorage.setItem('theme', 'light')
+            setIsDark(false)
         }
     }
 
@@ -47,31 +50,42 @@ export default function NavBar() {
 
     return (
         <>
-            <div className=" flex justify-between items-center p-2 z-30 bg-zinc-50 dark:dark:bg-zinc-950">
-                <Link to={'/'} className=' flex'>
+            <div className=" flex justify-between items-center p-2 z-30 bg-zinc-100 dark:dark:bg-zinc-950">
+                <Link to={'/'} className=' hidden items-center md:flex'>
                     <img src="/images/png/landing-logo.png" class=" w-8 " alt="FlowBite Logo" />
+                    <span className=' font-bold text-zinc-950 dark:text-blue-600 '>ChatOnly</span>
                 </Link>
-                <div className="group relative ">
-                    <FiMoreVertical className='  text-black dark:text-white text-2xl cursor-pointer ' />
-                    <div className=" opacity-0 hidden group-hover:block  group-hover:opacity-100 absolute right-2 top-5 w-44  rounded-md z-50  shadow bg-white overflow-hidden  dark:bg-zinc-950 dark:text-white">
-                        <div className="flex justify-end items-center  gap-2 p-3 font-bold bg-gray-50 border-b-1  dark:bg-zinc-900 dark:text-white dark:border-zinc-950">
-                            <span>Options</span>
-                            <IoMdSettings className='text-xl text-gray-600' />
+                <span className=' md:hidden text-lg mr-4 font-bold text-zinc-950 dark:text-blue-600 '>Chat</span>
+                <label htmlFor="theme" className=' -order-1'>
+                    <div className=' rounded-full p-2 cursor-pointer hover:bg-blue-600 hover:text-zinc-100  dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900 border-zinc-900  transition-colors'>
+                        {
+                            isDark ? (
+                                <IoIosMoon className=' text-2xl' />
+                            ) : (
+                                <GrSun className=' text-2xl' />
+                            )
+                        }
+                    </div>
+                    <input type="checkbox" id='theme' className='darkModeCheck hidden' onChange={(e) => darkModeHandler(e)} />
+                </label>
+                <div className="flex items-center gap-5">
+                    <div className="group relative  ">
+                        <div className=" p-2 rounded-full hover:bg-blue-600 hover:text-zinc-100  dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900 transition-colors ">
+                            <FiMoreVertical className=' text-xl cursor-pointer ' />
                         </div>
-                        <div className="flex justify-end items-center  gap-2 p-3">
-                            <span className=' text-sm'>{authContext.userInfos.username}</span>
-                            <LuUser2 className='text-xl text-blue-600' />
-                        </div>
-                        <div className="flex justify-end items-center  gap-2 p-3 group  cursor-pointer hover:bg-red-100 transition-colors" onClick={logOut}>
-                            <span className=' group-hover:text-red-600 text-sm'>Logout</span>
-                            <RiLogoutCircleRLine className='text-xl text-red-600' />
-                        </div>
-                        <div className="flex justify-center items-center  py-3 border-t-1 dark:border-zinc-900 dark:hover:bg-zinc-900 transition-colors cursor-pointer">
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" value="" class="darkModeCheck sr-only peer" onChange={(e) => darkModeHandler(e)} />
-                                <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-zinc-300">Dark Mode</span>
-                            </label>
+                        <div className=" opacity-0 hidden group-hover:block  group-hover:opacity-100 absolute right-2 top-8 w-44  rounded-md z-50  shadow bg-white overflow-hidden  dark:bg-zinc-950 dark:text-white">
+                            <div className="flex justify-end items-center  gap-2 p-3 font-bold bg-gray-50 border-b-1  dark:bg-zinc-900 dark:text-white dark:border-zinc-950">
+                                <span>Options</span>
+                                <IoMdSettings className='text-xl text-gray-600' />
+                            </div>
+                            <div className="flex justify-end items-center  gap-2 p-3">
+                                <span className=' text-sm'>{authContext.userInfos.username}</span>
+                                <LuUser2 className='text-xl text-blue-600' />
+                            </div>
+                            <div className="flex justify-end items-center  gap-2 p-3 group  cursor-pointer hover:bg-red-100 transition-colors" onClick={logOut}>
+                                <span className=' group-hover:text-red-600 text-sm'>Logout</span>
+                                <RiLogoutCircleRLine className='text-xl text-red-600' />
+                            </div>
                         </div>
                     </div>
                 </div>
