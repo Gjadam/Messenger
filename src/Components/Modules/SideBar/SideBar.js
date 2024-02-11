@@ -67,39 +67,6 @@ export default function SideBar({ chats }) {
                         )
                     }
                 </div>
-                {/* {
-                    searchValue.length ? (
-                        searchData.length > 0 ? (
-                            <div className=" bg-red-800 dark:bg-zinc-800">
-                                {
-                                    searchData?.map(search => (
-                                        <Contact key={search.id} userID={search.id} username={search.username} lastOnline={search.last_online} type={'search'} />
-                                    ))
-                                }
-
-                            </div>
-
-                        ) : (
-                            <div className=" flex justify-center items-center flex-col gap-2 mt-10 p-5">
-                                <MdErrorOutline className=' text-zinc-600 text-6xl' />
-                                <span className=' text-zinc-600'>This user could not be found</span>
-                            </div>
-                        )
-                    ) : (
-                        <>
-                            {
-                                chats.length ? (
-                                    chats.map(chat => (
-                                        <Contact key={chat.id} chatID={chat.id} userID={chat.target_user_id} username={chat.target_username} lastOnline={''} type={'contact'} />
-                                    ))
-                                ) : (
-                                    <ContactAlert text={'chats'} />
-                                )
-                            }
-                        </>
-
-                    )
-                } */}
                 <div className=" fixed left-6  bottom-6 z-50 p-3 rounded-full  bg-blue-600 dark:bg-zinc-700 dark:hover:bg-zinc-800 hover:bg-blue-700 cursor-pointer transition-colors " onClick={openContactsBox}>
                     {
                         isContactBoxOpen ? (
