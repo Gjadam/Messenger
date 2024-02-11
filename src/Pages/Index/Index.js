@@ -134,7 +134,7 @@ export default function Index() {
             <NavBarChat />
             <div className=" flex h-lvh max-h-screen bg-zinc-100 dark: dark:bg-zinc-950  ">
                 {/* Start SideBar */}
-                <div className=" w-96 md:inline-block hidden overflow-auto bg-white dark:bg-zinc-900 rounded-tr-2xl">
+                <div className=" w-96 md:inline-block hidden overflow-auto bg-white dark:bg-zinc-900 rounded-tr-2xl border-t-1 border-blue-600">
                     <SideBar chats={chats} />
                 </div>
                 {/* End SideBar */}
