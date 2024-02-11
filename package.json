@@ -12,6 +12,8 @@
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.21.3",
     "react-scripts": "5.0.1",
+    "socket.io": "^4.7.4",
+    "socket.io-client": "^4.7.4",
     "sweetalert2": "^11.10.4",
     "web-vitals": "^2.1.4"
   },
