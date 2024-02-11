@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Contact from '../Contact/Contact'
 import { MdErrorOutline } from "react-icons/md";
-import { RiChatSmile2Line } from "react-icons/ri";
 import { NavLink } from 'react-router-dom';
-export default function SideBar() {
+import { RiContactsBookFill } from "react-icons/ri";
+import { IoClose } from 'react-icons/io5';
+import ContactAlert from '../ContactAlert/ContactAlert';
+export default function SideBar({chats}) {
     const [searchValue, setSearchValue] = useState('')
     const [searchData, setSearchData] = useState([])
     const [contacts, setContacts] = useState([])
+    const [isContactBoxOpen, setIsContactBoxOpen] = useState(false)
     const localStorageData = JSON.parse(localStorage.getItem("user"))
 
     const getSearchData = () => {
@@ -42,12 +45,13 @@ export default function SideBar() {
     }, [searchValue])
 
 
-
-
+    const openContactsBox = () => {
+    setIsContactBoxOpen(!isContactBoxOpen)
+    }
 
     return (
         <>
-            <div className="">
+            <div className=" relative">
                 <div className=" m-2">
                     <input type="search" placeholder='Search' onChange={(e) => setSearchValue(e.target.value)} className=' rounded-full sticky top-0  w-full outline-none px-5 py-2  bg-zinc-100 dark:bg-zinc-800 dark:text-white' />
                 </div>
@@ -72,25 +76,41 @@ export default function SideBar() {
                     ) : (
                         <>
                             {
-                                contacts.length ? (
-                                    contacts.map(contact => (
-                                        <Contact key={contact.id} userID={contact.id} username={contact.username} lastOnline={contact.last_online} type={'contact'} />
+                                chats.length ? (
+                                    chats.map(chat => (
+                                        <Contact key={chat.id} chatID={chat.id} userID={chat.target_user_id} username={chat.target_username} lastOnline={''} type={'contact'} />
                                     ))
                                 ) : (
-                                    <div className=" flex justify-center items-center flex-col gap-2 mt-10 p-5">
-                                        <RiChatSmile2Line className=' text-zinc-700 text-6xl dark:text-zinc-300' />
-                                        <span className=' text-zinc-700 font-bold text-center dark:text-zinc-300'>You have no contacts on OnlyChat yet</span>
-                                        <ul className=' list-disc mt-3'>
-                                            <li className='text-zinc-500 dark:text-zinc-400 text-sm leading-6'>Search people by username </li>
-                                            <li className='text-zinc-500 dark:text-zinc-400 text-sm leading-6'>Invite friends to try OnlyChat</li>
-                                        </ul>
-                                    </div>
+                                    <ContactAlert text={'chats'} />
                                 )
                             }
                         </>
 
                     )
                 }
+                <div className=" fixed left-6  bottom-6 z-50 p-3 rounded-full  bg-blue-600 dark:bg-zinc-700 dark:hover:bg-zinc-800 hover:bg-blue-700 cursor-pointer transition-colors " onClick={openContactsBox}>
+                    {
+                        isContactBoxOpen ? (
+                            <IoClose className='text-2xl text-white' />
+                            ) : (
+                            <RiContactsBookFill className={` text-2xl text-white`} />
+                        )
+                    }
+                </div>
+                <div className={` absolute top-10 bottom-0 ${isContactBoxOpen ? " -left-0" : " -left-[50rem]"}   bg-white dark:bg-zinc-900  w-full  transition-all`}>
+                    <div className=" flex justify-start items-center text-blue-600 mt-5 p-3 border-b-1 border-blue-600">
+                        <span className=' flex items-center font-bold'><RiContactsBookFill className='text-2xl mr-1 ' />Contacts</span>
+                    </div>
+                    {
+                        contacts.length ? (
+                            contacts.map(contact => (
+                                <Contact key={contact.id} userID={contact.id} username={contact.username} lastOnline={contact.last_online} type={'contact'} />
+                            ))
+                        ) : (
+                            <ContactAlert text={'contacts'} />
+                        )
+                    }
+                </div>
             </div>
         </>
     )
