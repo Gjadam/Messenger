@@ -14,7 +14,7 @@ export default function NavBar() {
 
   return (
     <div className=" fixed top-0 right-0 left-0  z-50  container m-auto p-8 flex justify-between items-center ">
-      <div className=" flex items-center ">
+      <div className=" flex items-center text-sm md:text-base ">
         {
           authContext.isLoggedIn ? (
             <>
@@ -34,7 +34,7 @@ export default function NavBar() {
         <img src="/images/png/logo.png" alt="logo" className=' w-32' />
       </Link>
       <Link to='/' className=" block md:hidden">
-        <img src="/images/png/landing-logo.png" alt="logo" className=' w-10' />
+        <img src="/images/png/landing-logo.png" alt="logo" className=' w-9' />
       </Link>
     </div>
   )
