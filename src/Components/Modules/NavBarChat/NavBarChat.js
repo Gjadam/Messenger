@@ -6,8 +6,9 @@ import { IoMdSettings } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom';
 import { IoIosMoon } from "react-icons/io";
 import { GrSun } from "react-icons/gr";
-import { CiBatteryCharging } from "react-icons/ci";
-import { CiBatteryFull } from "react-icons/ci";
+import { PiBatteryChargingFill } from "react-icons/pi";
+import { PiBatteryFullFill } from "react-icons/pi";
+import { PiBatteryMediumFill } from "react-icons/pi";
 import AuthContext from '../../../context/authContext';
 export default function NavBar() {
 
@@ -69,7 +70,7 @@ export default function NavBar() {
     return (
         <>
             <div className=" flex justify-between items-center p-2 z-30 bg-zinc-100 dark:dark:bg-zinc-950">
-                <Link to={'/'} className=' hidden items-center md:flex'>
+                <Link to={'/'} className=' hidden items-center md:flex ml-5'>
                     <img src="/images/png/landing-logo.png" class=" w-8 " alt="FlowBite Logo" />
                     <span className=' font-bold text-zinc-950 dark:text-blue-600 '>ChatOnly</span>
                 </Link>
@@ -90,14 +91,21 @@ export default function NavBar() {
                         {
                             batteryCharging ? (
                                 <>
-                                <CiBatteryCharging className=' text-2xl ' />
-                                <span className=' absolute -left-1 top-[1.1rem] text-[0.5rem]  font-bold'>Charging</span>
+                                    <PiBatteryChargingFill className=' text-2xl ' />
+                                    <span className=' absolute -left-1 top-[1.1rem] text-[0.5rem]  font-bold'>Charging</span>
                                 </>
                             ) : (
-                                <>
-                                <CiBatteryFull className=' text-2xl ' />
-                                <span className=' absolute  top-[1.1rem] text-[0.5rem]  font-bold'>{+batteryLevel * 100}%</span>
-                                </>
+                                +batteryLevel * 100 > 50 ? (
+                                    <>
+                                        <PiBatteryFullFill className=' text-2xl ' />
+                                        <span className=' absolute  top-[1.1rem] text-[0.5rem]  font-bold'>{+batteryLevel * 100}%</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <PiBatteryMediumFill className=' text-2xl ' />
+                                        <span className=' absolute  top-[1.1rem] text-[0.5rem]  font-bold'>{+batteryLevel * 100}%</span>
+                                    </>
+                                )
                             )
                         }
                     </div>
@@ -107,7 +115,7 @@ export default function NavBar() {
                         </div>
                         <div className=" opacity-0 hidden group-hover:block  group-hover:opacity-100 absolute right-2 top-8 w-44  rounded-md z-50  shadow bg-white overflow-hidden  dark:bg-zinc-950 dark:text-white">
                             <div className="flex justify-end items-center  gap-2 p-3 font-bold bg-gray-50 border-b-1  dark:bg-zinc-900 dark:text-white dark:border-zinc-950">
-                                <span>Options</span>
+                                <span className=' text-sm'>Options</span>
                                 <IoMdSettings className='text-xl text-gray-600' />
                             </div>
                             <div className="flex justify-end items-center  gap-2 p-3">
