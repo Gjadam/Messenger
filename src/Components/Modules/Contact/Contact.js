@@ -38,8 +38,8 @@ export default function Contact({ chatID, userID, username, lastOnline, type }) 
     return (
         <>
             <NavLink to={`/chat/${userID}/${ typeof chatID === "number" ? chatID : ''}`} className={(Link) => Link.isActive && ' block bg-blue-500 text-white dark:bg-zinc-700'}>
-                <div className=" flex justify-between items-center hover:bg-blue-300 dark:hover:bg-zinc-500 hover:text-white transition-colors dark:text-white ">
-                    <div className=" w-full py-3 px-5 border-b-1 dark:border-zinc-950">
+                <div className="  hover:bg-blue-300 dark:hover:bg-zinc-500 hover:text-white transition-colors dark:text-white ">
+                    <div className=" flex justify-between items-center w-full py-3 px-5 border-b-1 dark:border-zinc-950">
 
                     <div className=" flex justify-start items-center gap-2">
                         <PiUserCircleFill className='text-4xl text-blue-700 dark:text-gray-300' />
@@ -51,7 +51,7 @@ export default function Contact({ chatID, userID, username, lastOnline, type }) 
                     {
                         type === 'search' &&
                         <div className="" onClick={addToContact}>
-                            <button className=' flex items-center p-0.5 text-blue-600 border-2 border-blue-600 rounded-full  hover:bg-blue-600 hover:text-white  transition-colors' ><AiOutlineUserAdd className=' text-2xl' /></button>
+                            <button className=' p-0.5 text-blue-600 border-2 border-blue-600 rounded-full  hover:bg-blue-600 hover:text-white  transition-colors' ><AiOutlineUserAdd className=' text-2xl' /></button>
                         </div>
                     }
                     </div>
