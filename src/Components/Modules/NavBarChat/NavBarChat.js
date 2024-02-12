@@ -6,13 +6,19 @@ import { IoMdSettings } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom';
 import { IoIosMoon } from "react-icons/io";
 import { GrSun } from "react-icons/gr";
+import { CiBatteryCharging } from "react-icons/ci";
+import { CiBatteryFull } from "react-icons/ci";
 import AuthContext from '../../../context/authContext';
 export default function NavBar() {
 
     const authContext = useContext(AuthContext)
     const navigate = useNavigate()
     const [isDark, setIsDark] = useState(false)
+    const [batteryLevel, setBatteryLevel] = useState(0)
+    const [batteryCharging, satBatteryCharging] = useState(false)
 
+    // console.log(+batteryLevel * 100 + '%');
+    // console.log(batteryCharging);
 
     // Dark Mode Logic
     useEffect(() => {
@@ -48,6 +54,20 @@ export default function NavBar() {
         navigate('/')
     }
 
+    useEffect(() => {
+        if ('getBattery' in navigator) {
+            navigator.getBattery().then(function (battery) {
+                const level = battery.level;
+                const charging = battery.charging;
+                setBatteryLevel(level)
+                satBatteryCharging(charging)
+
+            });
+        }
+    }, [batteryLevel, batteryCharging])
+
+
+
     return (
         <>
             <div className=" flex justify-between items-center p-2 z-30 bg-zinc-100 dark:dark:bg-zinc-950">
@@ -55,7 +75,6 @@ export default function NavBar() {
                     <img src="/images/png/landing-logo.png" class=" w-8 " alt="FlowBite Logo" />
                     <span className=' font-bold text-zinc-950 dark:text-blue-600 '>ChatOnly</span>
                 </Link>
-                <span className=' md:hidden text-lg mr-4 font-bold text-zinc-950 dark:text-blue-600 '>Chat</span>
                 <label htmlFor="theme" className=' -order-1'>
                     <div className=' rounded-full p-2 cursor-pointer hover:bg-blue-600 hover:text-zinc-100  dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900 border-zinc-900  transition-colors'>
                         {
@@ -69,6 +88,21 @@ export default function NavBar() {
                     <input type="checkbox" id='theme' className='darkModeCheck hidden' onChange={(e) => darkModeHandler(e)} />
                 </label>
                 <div className="flex items-center gap-5">
+                    <div className=" relative flex justify-center items-center flex-col  text-blue-600 dark:text-zinc-100">
+                        {
+                            batteryCharging ? (
+                                <>
+                                <CiBatteryCharging className=' text-2xl ' />
+                                <span className=' absolute -left-1 top-[1.1rem] text-[0.5rem]  font-bold'>Charging</span>
+                                </>
+                            ) : (
+                                <>
+                                <CiBatteryFull className=' text-2xl ' />
+                                <span className=' absolute  top-[1.1rem] text-[0.5rem]  font-bold'>{+batteryLevel * 100}%</span>
+                                </>
+                            )
+                        }
+                    </div>
                     <div className="group relative  ">
                         <div className=" p-2 rounded-full hover:bg-blue-600 hover:text-zinc-100  dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900 transition-colors ">
                             <FiMoreVertical className=' text-xl cursor-pointer ' />
