@@ -7,7 +7,7 @@ import { RiMenuUnfoldLine } from "react-icons/ri";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import SideBar from '../../Components/Modules/SideBar/SideBar';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import AuthContext from '../../context/authContext';
 import ChatAlert from '../../Components/Modules/ChatAlert/ChatAlert';
@@ -17,6 +17,7 @@ import ContactMessage from '../../Components/Modules/ContactMessage/ContactMessa
 export default function Index() {
 
     const authContext = useContext(AuthContext)
+    const navigate = useNavigate()
     const { userID, chatID } = useParams()
     const [chatScrollTarget, setChatScrollTarget] = useState('')
     const [chats, setChats] = useState([])
@@ -41,7 +42,7 @@ export default function Index() {
 
         const newWs = new WebSocket(`${webSocketProtocol}://${host}/chats/ws/${authContext.userInfos.id}/${userID}`);
         newWs.onmessage = (event) => {
-            setMessages(prevState => [...prevState, { role: "Contact", text: event.data }]);
+            setMessages(prevState => [...prevState, { role: "Contact", text: event.data, date_send: `${hours}:${minutes}` }]);
         }
         newWs.onopen = () => {
             setWs(newWs);
@@ -56,6 +57,7 @@ export default function Index() {
             setMessages(prevState => [...prevState, { role: "User", text: inputMessage, date_send: `${hours}:${minutes}` }]);
             setInputMessage('')
         }
+        navigate(`/chat/${userID}/`)
     }
 
     // Sidebar opening classes
@@ -134,7 +136,7 @@ export default function Index() {
             <NavBarChat />
             <div className=" flex h-lvh max-h-screen bg-zinc-100 dark: dark:bg-zinc-950  ">
                 {/* Start SideBar */}
-                <div className=" w-96 md:inline-block hidden overflow-auto bg-white dark:bg-zinc-900 rounded-tr-2xl border-t-1 border-blue-600">
+                <div className=" w-96 md:inline-block hidden overflow-auto bg-white dark:bg-zinc-900 rounded-tr-2xl border-t-2 border-blue-600">
                     <SideBar chats={chats} />
                 </div>
                 {/* End SideBar */}
@@ -152,8 +154,8 @@ export default function Index() {
                 {/* End SideBar For Mobile */}
                 <div className={` flex ${contactDatas.id ? 'justify-between' : 'justify-start'} items-start flex-col  w-full   bg-zinc-100 dark:bg-zinc-950 relative`}>
                     {/* Start User Information */}
-                    <div className="px-2 w-full">
-                        <div className={` flex ${contactDatas.id ? 'justify-between' : 'justify-end'} items-center rounded-t-2xl z-10 bg-white dark:bg-zinc-900 dark:text-white`}>
+                    <div className="px-2 w-full ">
+                        <div className={` flex ${contactDatas.id ? 'justify-between border-t-2 border-blue-600' : 'justify-end'} items-center rounded-t-2xl z-10 bg-white dark:bg-zinc-900 dark:text-white`}>
                             {
                                 contactDatas.id &&
                                 <div className=" flex items-center px-3 py-1">
@@ -183,7 +185,6 @@ export default function Index() {
                                 <div className="ScrollChat  flex flex-col  w-full z-0 overflow-y-scroll px-3 " onScroll={(e) => chatScroll(e)}>
                                     {
                                         chatID &&
-                                            prevMessages.length > 0 ? (
                                             prevMessages.map(prevMessage => (
                                                 prevMessage.sender_id === +userID ? (
                                                     <ContactMessage {...prevMessage} />
@@ -191,9 +192,6 @@ export default function Index() {
                                                     <UserMessage {...prevMessage} />
                                                 )
                                             ))
-                                        ) : (
-                                            <ChatAlert />
-                                        )
                                     }
                                     {
                                         messages.map(message => (
@@ -208,7 +206,7 @@ export default function Index() {
                                 {/* End Chat */}
                                 {/* Start Input Chat */}
                                 <form className=" relative flex justify-between items-center w-full mb-2 " onSubmit={(event) => sendMessage(event)}>
-                                    <div className={` flex justify-center items-center absolute  right-5 bottom-12 bg-zinc-600  shadow-xl dark:bg-zinc-100 h-11 w-11 rounded-full  cursor-pointer ${chatScrollTarget < 1000 ? 'opacity-100 visible  -translate-y-5' : ' opacity-0 invisible  translate-y-5'} transition-all`} onClick={scrollToEnd}>
+                                    <div className={` flex justify-center items-center absolute  right-5 bottom-12 bg-zinc-600  shadow-xl dark:bg-zinc-100 h-11 w-11 rounded-full  cursor-pointer ${chatScrollTarget < 5 ? 'opacity-100 visible  -translate-y-5' : ' opacity-0 invisible  translate-y-5'} transition-all`} onClick={scrollToEnd}>
                                         <IoIosArrowDown className=' mt-1 text-3xl text-zinc-100 dark:text-blue-600' />
                                     </div>
                                     <input type="text" placeholder='Message' value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} className='  w-full p-4 h-full rounded-full mx-2  outline-none bg-white dark:bg-zinc-900 dark:text-white' />
