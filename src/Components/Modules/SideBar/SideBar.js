@@ -6,6 +6,7 @@ import { PiChatsCircleDuotone } from "react-icons/pi";
 import { RiContactsBookFill } from "react-icons/ri";
 import { IoClose } from 'react-icons/io5';
 import ContactAlert from '../ContactAlert/ContactAlert';
+import HeaderSideBar from '../HeaderSideBar/HeaderSideBar';
 export default function SideBar({ chats }) {
     const [searchValue, setSearchValue] = useState('')
     const [searchData, setSearchData] = useState([])
@@ -54,9 +55,7 @@ export default function SideBar({ chats }) {
         <>
             <div className=" relative">
                 <div className="">
-                    <div className=" flex justify-start items-center text-blue-600  p-3 border-b-1 dark:border-zinc-950">
-                        <span className=' flex items-center font-bold'><PiChatsCircleDuotone className='text-2xl mr-1 ' />Chats</span>
-                    </div>
+                    <HeaderSideBar icon={<PiChatsCircleDuotone className='text-2xl mr-1 ' />} text={'chats'} />
                     {
                         chats.length ? (
                             chats.map(chat => (
@@ -67,26 +66,33 @@ export default function SideBar({ chats }) {
                         )
                     }
                 </div>
-                <div className=" fixed left-6  bottom-6 z-50 p-3 rounded-full  bg-blue-600 dark:bg-zinc-700 dark:hover:bg-zinc-800 hover:bg-blue-700 cursor-pointer transition-colors " onClick={openContactsBox}>
+                <div className=" group fixed left-6  bottom-6 z-50 p-3 rounded-full  bg-blue-600 dark:bg-zinc-700 dark:hover:bg-zinc-800 hover:bg-blue-700 cursor-pointer transition-colors " onClick={openContactsBox}>
                     {
                         isContactBoxOpen ? (
                             <IoClose className='text-2xl text-white' />
                         ) : (
-                            <RiContactsBookFill className={` text-2xl text-white`} />
+                            <>
+                                <RiContactsBookFill className={` text-2xl text-white`} />
+                            </>
                         )
                     }
+                    <div className=" absolute left-0 opacity-0 top-3 group-hover:left-12 group-hover:opacity-100  transition-all delay-75 ease-out ">
+                        <span className=' text-sm ml-1 font-bold text-blue-600 dark:text-zinc-100'>Contacts</span>
+                    </div>
                 </div>
-                <div className={` absolute top-0 bottom-0 ${isContactBoxOpen ? " -left-0" : " -left-[50rem]"}   bg-white dark:bg-zinc-900  w-full  transition-all`}>
+                <div className={` absolute top-0 bottom-0 ${isContactBoxOpen ? " -left-0" : " -left-[50rem]"}    w-full  transition-all`}>
+                    <div className="bg-white dark:bg-zinc-900 w-full h-full">
+
                     <div className="  m-2">
                         <input type="search" placeholder='Search' onChange={(e) => setSearchValue(e.target.value)} className=' rounded-full sticky top-0  w-full outline-none px-5 py-2  bg-zinc-100 dark:bg-zinc-800 dark:text-white' />
                         {
                             searchValue.length &&
-                                searchData.length > 0 ? (
+                            searchData.length > 0 ? (
                                 <div className=" rounded-xl mt-1  w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
                                     {
                                         searchData?.map(search => (
                                             <Contact key={search.id} userID={search.id} username={search.username} lastOnline={search.last_online} type={'search'} />
-                                        ))
+                                            ))
                                     }
 
                                 </div>
@@ -94,18 +100,17 @@ export default function SideBar({ chats }) {
                             ) : null
                         }
                     </div>
-                    <div className=" flex justify-start items-center text-blue-600 mt-5 p-3 border-b-1 dark:border-zinc-950">
-                        <span className=' flex items-center font-bold'><RiContactsBookFill className='text-2xl mr-1 ' />Contacts</span>
-                    </div>
+                    <HeaderSideBar icon={<RiContactsBookFill className='text-2xl mr-1 ' />} text={'Contacts'} />
                     {
                         contacts.length ? (
                             contacts.map(contact => (
                                 <Contact key={contact.id} userID={contact.id} username={contact.username} lastOnline={contact.last_online} type={'contact'} />
-                            ))
-                        ) : (
-                            <ContactAlert text={'contacts'} />
-                        )
-                    }
+                                ))
+                                ) : (
+                                    <ContactAlert text={'contacts'} />
+                                    )
+                                }
+                                </div>
                 </div>
             </div>
         </>
