@@ -17,8 +17,6 @@ export default function NavBar() {
     const [batteryLevel, setBatteryLevel] = useState(0)
     const [batteryCharging, satBatteryCharging] = useState(false)
 
-    // console.log(+batteryLevel * 100 + '%');
-    // console.log(batteryCharging);
 
     // Dark Mode Logic
     useEffect(() => {
