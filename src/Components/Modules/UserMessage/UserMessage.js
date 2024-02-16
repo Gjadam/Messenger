@@ -8,7 +8,7 @@ export default function UserMessage(props) {
         <>
             <div className=" flex justify-end items-center ">
 
-                <div className=" break-words max-w-96 min-w-4 rounded-s-xl rounded-br-xl bg-blue-600 text-white text-wrap  px-3 pb-6 pt-3 my-2 relative">
+                <div className=" break-words max-w-96 min-w-4 rounded-s-xl overflow-hidden rounded-br-xl bg-blue-600 text-white text-wrap  px-3 pb-6 pt-3 my-2 relative">
                     <p>{props.text}</p>
                     {
                         props.role === "User" ? (
