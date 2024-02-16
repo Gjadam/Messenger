@@ -26,6 +26,7 @@ export default function Index() {
     const [messages, setMessages] = useState([])
     const [inputMessage, setInputMessage] = useState('');
     const [ws, setWs] = useState({})
+    const [wsUserOnline, setWsUserOnline] = useState(false)
     const host = 'chattak-alirh.koyeb.app';
     const protocol = window.location.protocol;
     const webSocketProtocol = protocol === "http:" ? "ws" : "wss";
@@ -40,7 +41,7 @@ export default function Index() {
     // Create Web Socket
     useEffect(() => {
 
-        const newWs = new WebSocket(`${webSocketProtocol}://${host}/chats/ws/${authContext.userInfos.id}/${userID}`);
+        const newWs = new WebSocket(`${webSocketProtocol}://${host}/chats/${authContext.userInfos.id}/${userID}`);
         newWs.onmessage = (event) => {
             setMessages(prevState => [...prevState, { role: "Contact", text: event.data, date_send: `${hours}:${minutes}` }]);
         }
@@ -48,17 +49,25 @@ export default function Index() {
             setWs(newWs);
         };
 
+        const newUserOnlineWs = new WebSocket(`${webSocketProtocol}://${host}/chats/check_connection/${authContext.userInfos.id}/${userID}`);
+        newUserOnlineWs.onmessage = (event) => {
+            setWsUserOnline(event.data);
+        }
     }, [userID])
+
 
     const sendMessage = (event) => {
         event.preventDefault()
         if (ws.readyState === WebSocket.OPEN) {
-            ws.send(inputMessage)
-            setMessages(prevState => [...prevState, { role: "User", text: inputMessage, date_send: `${hours}:${minutes}` }]);
-            setInputMessage('')
+            if (inputMessage.length > 0) {
+                ws.send(inputMessage)
+                setMessages(prevState => [...prevState, { role: "User", text: inputMessage, date_send: `${hours}:${minutes}` }]);
+                setInputMessage('')
+            }
         }
         navigate(`/chat/${userID}/`)
     }
+
 
     // Sidebar opening classes
     const openSideBar = () => {
@@ -167,7 +176,7 @@ export default function Index() {
                                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                                                 <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
                                             </span>
-                                            <span className=' text-xs'>{contactDatas.last_online}</span>
+                                            <span className=' text-xs'>{wsUserOnline ? 'online' : 'last seen recently'}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -182,16 +191,16 @@ export default function Index() {
                         contactDatas.id ? (
                             <>
                                 {/* Start Chat */}
-                                <div className="ScrollChat  flex flex-col  w-full z-0 overflow-y-scroll px-3 " onScroll={(e) => chatScroll(e)}>
+                                <div className="ScrollChat  flex flex-col  w-full z-0 overflow-y-scroll  scroll-smooth  px-3 " onScroll={(e) => chatScroll(e)}>
                                     {
                                         chatID &&
-                                            prevMessages.map(prevMessage => (
-                                                prevMessage.sender_id === +userID ? (
-                                                    <ContactMessage {...prevMessage} />
-                                                ) : (
-                                                    <UserMessage {...prevMessage} />
-                                                )
-                                            ))
+                                        prevMessages.map(prevMessage => (
+                                            prevMessage.sender_id === +userID ? (
+                                                <ContactMessage {...prevMessage} />
+                                            ) : (
+                                                <UserMessage {...prevMessage} />
+                                            )
+                                        ))
                                     }
                                     {
                                         messages.map(message => (
@@ -206,7 +215,7 @@ export default function Index() {
                                 {/* End Chat */}
                                 {/* Start Input Chat */}
                                 <form className=" relative flex justify-between items-center w-full mb-2 " onSubmit={(event) => sendMessage(event)}>
-                                    <div className={` flex justify-center items-center absolute  right-5 bottom-12 bg-zinc-600  shadow-xl dark:bg-zinc-100 h-11 w-11 rounded-full  cursor-pointer ${chatScrollTarget < 5 ? 'opacity-100 visible  -translate-y-5' : ' opacity-0 invisible  translate-y-5'} transition-all`} onClick={scrollToEnd}>
+                                    <div className={` flex justify-center items-center absolute  right-4 bottom-10 bg-zinc-600 shadow-xl dark:bg-zinc-100 h-11 w-11 rounded-full  cursor-pointer ${chatScrollTarget < 100 ? 'opacity-100 visible  -translate-y-5' : ' opacity-0 invisible  translate-y-5'} transition-all`} onClick={scrollToEnd}>
                                         <IoIosArrowDown className=' mt-1 text-3xl text-zinc-100 dark:text-blue-600' />
                                     </div>
                                     <input type="text" placeholder='Message' value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} className='  w-full p-4 h-full rounded-full mx-2  outline-none bg-white dark:bg-zinc-900 dark:text-white' />
