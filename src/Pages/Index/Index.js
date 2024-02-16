@@ -38,6 +38,7 @@ export default function Index() {
 
 
 
+
     // Create Web Socket
     useEffect(() => {
 
@@ -172,11 +173,14 @@ export default function Index() {
                                     <div className=" flex flex-col ms-2 gap-1">
                                         <span className=' font-bold'>{contactDatas.username}</span>
                                         <div className=" flex justify-start items-center">
-                                            <span class="relative flex h-2 w-2 mr-1">
-                                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                                                <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
-                                            </span>
-                                            <span className=' text-xs'>{wsUserOnline ? 'online' : 'last seen recently'}</span>
+                                            {
+                                                wsUserOnline === "True" &&
+                                                <span class="relative flex h-2 w-2 mr-1">
+                                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+                                                </span>
+                                            }
+                                            <span className=' text-xs '>{wsUserOnline === "False" ? 'last seen recently' : 'online'}</span>
                                         </div>
                                     </div>
                                 </div>
