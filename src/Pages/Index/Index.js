@@ -191,7 +191,7 @@ export default function Index() {
                                                     <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
                                                 </span>
                                             }
-                                            <span className=' text-xs font-semibold '>{wsUserOnline === "False" ? 'last seen recently' : 'online'}</span>
+                                            <span className=' text-xs font-semibold '>{wsUserOnline === "True" ? 'online' : 'last seen recently'}</span>
                                         </div>
                                     </div>
                                 </div>
