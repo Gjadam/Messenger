@@ -5,7 +5,7 @@ export default function ContactMessage(props) {
         <>
         <div className="flex justify-start items-center">
 
-            <div className="  break-words  max-w-96 self-end rounded-e-xl rounded-bl-xl bg-zinc-600 text-white px-3 pb-6 pt-3 my-2 relative">
+            <div className="  break-words  max-w-96 self-end rounded-e-xl overflow-hidden rounded-bl-xl bg-zinc-600 text-white px-3 pb-6 pt-3 my-2 relative">
                 <p>{props.text}</p>
                 {
                         props.role === "Contact" ? (
