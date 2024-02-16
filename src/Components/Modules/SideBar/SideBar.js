@@ -59,7 +59,7 @@ export default function SideBar({ chats }) {
                     {
                         chats.length ? (
                             chats.map(chat => (
-                                <Contact key={chat.id} chatID={chat.id} userID={chat.target_user_id} username={chat.target_username} lastOnline={''} type={'contact'} />
+                                <Contact key={chat.id} chatID={chat.id} userID={chat.target_user_id} username={chat.target_username} lastOnline={''} type={''} />
                             ))
                         ) : (
                             <ContactAlert text={'chats'} />
