@@ -17,7 +17,6 @@ import ContactMessage from '../../Components/Modules/ContactMessage/ContactMessa
 export default function Index() {
 
     const authContext = useContext(AuthContext)
-    const navigate = useNavigate()
     const { userID, chatID } = useParams()
     const [chatScrollTarget, setChatScrollTarget] = useState('')
     const [chatScrollTop, setChatScrollTop] = useState('')
@@ -67,7 +66,6 @@ export default function Index() {
                 setInputMessage('')
             }
         }
-        navigate(`/chat/${userID}/`)
     }
 
 
