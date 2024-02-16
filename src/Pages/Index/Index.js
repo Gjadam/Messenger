@@ -20,6 +20,7 @@ export default function Index() {
     const navigate = useNavigate()
     const { userID, chatID } = useParams()
     const [chatScrollTarget, setChatScrollTarget] = useState('')
+    const [chatScrollTop, setChatScrollTop] = useState('')
     const [chats, setChats] = useState([])
     const [contactDatas, setContactDatas] = useState([])
     const [prevMessages, setPrevMessages] = useState([])
@@ -132,14 +133,24 @@ export default function Index() {
         }
     }, [chatID])
 
+
     // Chat Scroll Logic
     const chatScroll = (e) => {
-        setChatScrollTarget(e.target.scrollTop)
+        const ScrollChat = document.querySelector('.ScrollChat')
+        setChatScrollTop(e.target.scrollTop)
+        if (ScrollChat.scrollTop + ScrollChat.clientHeight === ScrollChat.scrollHeight) {
+            setChatScrollTarget('end')
+
+        } else {
+            setChatScrollTarget('start')
+        }
     }
     const scrollToEnd = () => {
         const ScrollChat = document.querySelector('.ScrollChat')
         ScrollChat.scrollTo(0, ScrollChat.scrollHeight)
     }
+
+
 
     return (
         <>
@@ -170,7 +181,7 @@ export default function Index() {
                                 contactDatas.id &&
                                 <div className=" flex items-center px-3 py-1">
                                     <PiUserCircleFill className='text-5xl text-blue-600 dark:text-zinc-300' />
-                                    <div className=" flex flex-col ms-2 gap-1">
+                                    <div className=" flex flex-col ms-2">
                                         <span className=' font-bold'>{contactDatas.username}</span>
                                         <div className=" flex justify-start items-center">
                                             {
@@ -180,7 +191,7 @@ export default function Index() {
                                                     <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
                                                 </span>
                                             }
-                                            <span className=' text-xs '>{wsUserOnline === "False" ? 'last seen recently' : 'online'}</span>
+                                            <span className=' text-xs font-semibold '>{wsUserOnline === "False" ? 'last seen recently' : 'online'}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -219,7 +230,7 @@ export default function Index() {
                                 {/* End Chat */}
                                 {/* Start Input Chat */}
                                 <form className=" relative flex justify-between items-center w-full mb-2 " onSubmit={(event) => sendMessage(event)}>
-                                    <div className={` flex justify-center items-center absolute  right-4 bottom-10 bg-zinc-600 shadow-xl dark:bg-zinc-100 h-11 w-11 rounded-full  cursor-pointer ${chatScrollTarget < 100 ? 'opacity-100 visible  -translate-y-5' : ' opacity-0 invisible  translate-y-5'} transition-all`} onClick={scrollToEnd}>
+                                    <div className={` flex justify-center items-center absolute  right-4 bottom-10 bg-zinc-600 shadow-xl dark:bg-zinc-100 h-11 w-11 rounded-full  cursor-pointer ${chatScrollTop > 0 ? (chatScrollTarget === 'end' ? 'opacity-0 invisible translate-y-5' : 'opacity-100 visible -translate-y-5') : ('opacity-0 invisible translate-y-5')} transition-all`} onClick={scrollToEnd}>
                                         <IoIosArrowDown className=' mt-1 text-3xl text-zinc-100 dark:text-blue-600' />
                                     </div>
                                     <input type="text" placeholder='Message' value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} className='  w-full p-4 h-full rounded-full mx-2  outline-none bg-white dark:bg-zinc-900 dark:text-white' />
