@@ -8,22 +8,26 @@ export default function UserMessage(props) {
         <>
             <div className=" flex justify-end items-center ">
 
-                <div className=" break-words max-w-96 min-w-4 rounded-s-xl overflow-hidden rounded-br-xl bg-blue-600 text-white text-wrap  px-3 pb-6 pt-3 my-2 relative">
-                    <p>{props.text}</p>
-                    {
-                        props.role === "User" ? (
-                            <span className=' absolute bottom-1 right-3 text-xs'>{props.date_send}</span>
-                        ) : (
-                            <span className=' absolute bottom-1 right-3 text-xs'>{props.date_send?.slice(11, 16)}</span>
-                        )
-                    }
-                    {
-                        props.is_seen ? (
-                            <IoCheckmarkDoneOutline className=' absolute bottom-1 right-11 text-lg text-blue-200' />
-                        ) : (
-                            <IoCheckmarkOutline className=' absolute bottom-1 right-11 text-lg text-blue-200' />
-                        )
-                    }
+                <div className=" flex items-center break-words max-w-96 min-w-4 rounded-s-xl overflow-hidden rounded-br-xl bg-blue-600 text-white text-wrap  px-3 py-4  my-2 ">
+                    <p>{props.text}
+                        <div className="flex items-center mt-1 gap-1">
+
+                            {
+                                props.role === "User" ? (
+                                    <span className='  text-xs'>{props.date_send}</span>
+                                ) : (
+                                    <span className='  text-xs'>{props.date_send?.slice(11, 16)}</span>
+                                )
+                            }
+                            {
+                                props.is_seen ? (
+                                    <IoCheckmarkDoneOutline className='  text-lg text-blue-100' />
+                                ) : (
+                                    <IoCheckmarkOutline className='  text-lg text-blue-100' />
+                                )
+                            }
+                        </div>
+                    </p>
                 </div>
             </div>
         </>
