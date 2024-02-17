@@ -13,18 +13,23 @@ import AuthContext from '../../context/authContext';
 import ChatAlert from '../../Components/Modules/ChatAlert/ChatAlert';
 import UserMessage from '../../Components/Modules/UserMessage/UserMessage';
 import ContactMessage from '../../Components/Modules/ContactMessage/ContactMessage';
-
+import { MdDataSaverOn } from 'react-icons/md';
+import { MdKeyboard } from "react-icons/md";
+import { MdEmojiEmotions } from "react-icons/md";
+import Picker from 'emoji-picker-react';
 export default function Index() {
 
     const authContext = useContext(AuthContext)
     const { userID, chatID } = useParams()
     const [chatScrollTarget, setChatScrollTarget] = useState('')
     const [chatScrollTop, setChatScrollTop] = useState('')
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [chats, setChats] = useState([])
     const [contactDatas, setContactDatas] = useState([])
     const [prevMessages, setPrevMessages] = useState([])
     const [messages, setMessages] = useState([])
     const [inputMessage, setInputMessage] = useState('');
+
     const [ws, setWs] = useState({})
     const [wsUserOnline, setWsUserOnline] = useState(false)
     const host = 'chattak-alirh.koyeb.app';
@@ -35,7 +40,6 @@ export default function Index() {
     const currentDate = new Date();
     const hours = currentDate.getHours();
     const minutes = currentDate.getMinutes();
-
 
 
 
@@ -148,6 +152,9 @@ export default function Index() {
         ScrollChat.scrollTo(0, ScrollChat.scrollHeight)
     }
 
+    const handleEmojiClick = (emoji) => {
+        setInputMessage(prevState => [prevState + emoji.emoji])
+    };
 
 
     return (
@@ -178,18 +185,38 @@ export default function Index() {
                             {
                                 contactDatas.id &&
                                 <div className=" flex items-center px-3 py-1">
-                                    <PiUserCircleFill className='text-5xl text-blue-600 dark:text-zinc-300' />
+                                    {
+                                        contactDatas.username === authContext.userInfos.username ? (
+                                            <MdDataSaverOn className='text-5xl text-blue-700 dark:text-gray-300' />
+                                        ) : (
+                                            <PiUserCircleFill className='text-5xl text-blue-700 dark:text-gray-300' />
+                                        )
+                                    }
                                     <div className=" flex flex-col ms-2">
-                                        <span className=' font-bold'>{contactDatas.username}</span>
+                                        {
+                                            contactDatas.username === authContext.userInfos.username ? (
+                                                <span className=' font-bold'>Saved Messages</span>
+                                            ) : (
+                                                <span className=' font-bold'>{contactDatas.username}</span>
+                                            )
+                                        }
                                         <div className=" flex justify-start items-center">
                                             {
-                                                wsUserOnline === "True" &&
-                                                <span class="relative flex h-2 w-2 mr-1">
-                                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
-                                                </span>
+                                                contactDatas.username === authContext.userInfos.username ? (
+                                                    null
+                                                ) : (
+                                                    <>
+                                                        {
+                                                            wsUserOnline === "True" &&
+                                                            <span class="relative flex h-2 w-2 mr-1">
+                                                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                                                <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+                                                            </span>
+                                                        }
+                                                        <span className=' text-xs font-semibold '>{wsUserOnline === "True" ? 'online' : 'last seen recently'}</span>
+                                                    </>
+                                                )
                                             }
-                                            <span className=' text-xs font-semibold '>{wsUserOnline === "True" ? 'online' : 'last seen recently'}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -218,9 +245,9 @@ export default function Index() {
                                     {
                                         messages.map(message => (
                                             message.role === "User" ? (
-                                                <UserMessage {...message} />
+                                                <UserMessage  {...message} />
                                             ) : (
-                                                <ContactMessage {...message} />
+                                                <ContactMessage  {...message} />
                                             )
                                         ))
                                     }
@@ -228,6 +255,23 @@ export default function Index() {
                                 {/* End Chat */}
                                 {/* Start Input Chat */}
                                 <form className=" relative flex justify-between items-center w-full mb-2 " onSubmit={(event) => sendMessage(event)}>
+                                    <div className='ml-2 relative cursor-pointer ' >
+                                        <div className={`${showEmojiPicker && ' bg-white dark:bg-zinc-900'} hover:bg-white dark:hover:bg-zinc-900  rounded-full p-2 transition-colors`}>
+
+                                            {
+                                                showEmojiPicker ? (
+                                                    <MdKeyboard className=' text-blue-600 text-4xl' onClick={() => setShowEmojiPicker(false)} />
+                                                ) : (
+                                                    <MdEmojiEmotions className=' text-blue-600  text-4xl ' onClick={() => setShowEmojiPicker(true)} />
+                                                )
+                                            }
+                                        </div>
+                                        <div className={`${showEmojiPicker ? (' opacity-100') : (" opacity-0")} bg-white rounded-full absolute left-0 bottom-14 z-10 transition-opacity ease-out`}>
+                                            {showEmojiPicker && (
+                                                <Picker reactionsDefaultOpen={true} onEmojiClick={handleEmojiClick} />
+                                            )}
+                                        </div>
+                                    </div>
                                     <div className={` flex justify-center items-center absolute  right-4 bottom-10 bg-zinc-600 shadow-xl dark:bg-zinc-100 h-11 w-11 rounded-full  cursor-pointer ${chatScrollTop > 0 ? (chatScrollTarget === 'end' ? 'opacity-0 invisible translate-y-5' : 'opacity-100 visible -translate-y-5') : ('opacity-0 invisible translate-y-5')} transition-all`} onClick={scrollToEnd}>
                                         <IoIosArrowDown className=' mt-1 text-3xl text-zinc-100 dark:text-blue-600' />
                                     </div>
