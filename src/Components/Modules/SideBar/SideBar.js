@@ -26,7 +26,6 @@ export default function SideBar({ chats }) {
             })
     }
 
-
     useEffect(() => {
         // Get Search Datas from server
         if (searchValue.length > 0) {
@@ -44,7 +43,7 @@ export default function SideBar({ chats }) {
             .then(data => {
                 setContacts(data)
             })
-    }, [searchValue])
+    }, [contacts])
 
 
     const openContactsBox = () => {
