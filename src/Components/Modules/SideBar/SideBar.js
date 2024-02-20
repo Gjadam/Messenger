@@ -58,7 +58,7 @@ export default function SideBar({ chats }) {
                     {
                         chats.length ? (
                             chats.map(chat => (
-                                <Contact key={chat.id} chatID={chat.id} userID={chat.target_user_id} username={chat.target_username} lastOnline={''} type={''} />
+                                <Contact key={chat.id} chatID={chat.id} userID={chat.target_user_id} username={chat.target_username} />
                             ))
                         ) : (
                             <ContactAlert text={'chats'} />
@@ -90,7 +90,7 @@ export default function SideBar({ chats }) {
                                 <div className=" rounded-xl mt-1  w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
                                     {
                                         searchData?.map(search => (
-                                            <Contact key={search.id} userID={search.id} username={search.username} lastOnline={search.last_online} type={'search'} />
+                                            <Contact key={search.id} userID={search.id} username={search.username} type={'search'} />
                                             ))
                                     }
 
@@ -103,7 +103,7 @@ export default function SideBar({ chats }) {
                     {
                         contacts.length ? (
                             contacts.map(contact => (
-                                <Contact key={contact.id} userID={contact.id} username={contact.username} lastOnline={contact.last_online} type={'contact'} />
+                                <Contact key={contact.id} userID={contact.id} username={contact.username}  />
                                 ))
                                 ) : (
                                     <ContactAlert text={'contacts'} />
