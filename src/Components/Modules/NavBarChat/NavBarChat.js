@@ -70,7 +70,7 @@ export default function NavBar() {
     return (
         <>
             <div className=" flex justify-between items-center p-2 z-30 bg-zinc-100 dark:dark:bg-zinc-950">
-                <Link to={'/'} className=' hidden items-center md:flex ml-5'>
+                <Link to={'/'} className=' hidden items-center md:flex ml-5 select-none'>
                     <img src="/images/png/landing-logo.png" class=" w-8 " alt="chatOnly Logo" />
                     <span className=' font-bold text-zinc-950 dark:text-blue-600 '>ChatOnly</span>
                 </Link>
@@ -95,18 +95,18 @@ export default function NavBar() {
                             batteryCharging ? (
                                 <>
                                     <PiBatteryChargingFill className=' text-2xl ' />
-                                    <span className=' absolute -left-1 top-[1.1rem] text-[0.5rem]  font-bold'>Charging</span>
+                                    <span className=' absolute -left-1 top-[1.1rem] text-[0.5rem] select-none  font-bold'>Charging</span>
                                 </>
                             ) : (
                                 +batteryLevel * 100 > 50 ? (
                                     <>
                                         <PiBatteryFullFill className=' text-2xl ' />
-                                        <span className=' absolute  top-[1.1rem] text-[0.5rem]  font-bold'>{+batteryLevel * 100}%</span>
+                                        <span className=' absolute  top-[1.1rem] text-[0.5rem] select-none  font-bold'>{+batteryLevel * 100}%</span>
                                     </>
                                 ) : (
                                     <>
                                         <PiBatteryMediumFill className=' text-2xl ' />
-                                        <span className=' absolute  top-[1.1rem] text-[0.5rem]  font-bold'>{+batteryLevel * 100}%</span>
+                                        <span className=' absolute  top-[1.1rem] text-[0.5rem] select-none  font-bold'>{+batteryLevel * 100}%</span>
                                     </>
                                 )
                             )
