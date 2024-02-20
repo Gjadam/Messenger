@@ -66,50 +66,49 @@ export default function SideBar({ chats }) {
                     }
                 </div>
                 <div className=" group fixed left-6  bottom-6 z-50 p-3 rounded-full  bg-blue-600 dark:bg-zinc-700 dark:hover:bg-zinc-800 hover:bg-blue-700 cursor-pointer transition-colors " onClick={openContactsBox}>
-                    {
-                        isContactBoxOpen ? (
-                            <IoClose className='text-2xl text-white' />
-                        ) : (
-                            <>
-                                <RiContactsBookFill className={` text-2xl text-white`} />
-                            </>
-                        )
-                    }
+                    <div className=" flex relative ">
+                        <div className={` absolute ${isContactBoxOpen ? 'translate-x-0' : 'translate-x-8' }  transition-transform`}>
+                            <IoClose className=' text-2xl text-white' />
+                        </div>
+                        <div className={`${isContactBoxOpen ? '-translate-x-9' : '-translate-x-0' } -translate-x-4 transition-transform`}>
+                            <RiContactsBookFill className=' text-2xl text-white' />
+                        </div>
+                    </div>
                     <div className=" absolute left-0 opacity-0 top-3 group-hover:left-12 group-hover:opacity-100  transition-all delay-75 ease-out ">
-                        <span className=' text-sm ml-1 font-bold text-blue-600 dark:text-zinc-100'>Contacts</span>
+                        <span className=' text-sm ml-1 font-bold text-blue-600 dark:text-zinc-100'>{isContactBoxOpen ? 'Close' : 'Contacts'} </span>
                     </div>
                 </div>
                 <div className={` absolute top-0 bottom-0 ${isContactBoxOpen ? " -left-0" : " -left-[50rem]"}    w-full  transition-all`}>
                     <div className="bg-white dark:bg-zinc-900 w-full h-full">
 
-                    <div className="  m-2">
-                        <input type="search" placeholder='Search' onChange={(e) => setSearchValue(e.target.value)} className=' rounded-full sticky top-0  w-full outline-none px-5 py-2  bg-zinc-100 dark:bg-zinc-800 dark:text-white' />
-                        {
-                            searchValue.length &&
-                            searchData.length > 0 ? (
-                                <div className=" rounded-xl mt-1  w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
-                                    {
-                                        searchData?.map(search => (
-                                            <Contact key={search.id} userID={search.id} username={search.username} type={'search'} />
+                        <div className="  m-2">
+                            <input type="search" placeholder='Search' onChange={(e) => setSearchValue(e.target.value)} className=' rounded-full sticky top-0  w-full outline-none px-5 py-2  bg-zinc-100 dark:bg-zinc-800 dark:text-white' />
+                            {
+                                searchValue.length &&
+                                    searchData.length > 0 ? (
+                                    <div className=" rounded-xl mt-1  w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                                        {
+                                            searchData?.map(search => (
+                                                <Contact key={search.id} userID={search.id} username={search.username} type={'search'} />
                                             ))
-                                    }
+                                        }
 
-                                </div>
+                                    </div>
 
-                            ) : null
+                                ) : null
+                            }
+                        </div>
+                        <HeaderSideBar icon={<RiContactsBookFill className='text-2xl mr-1 ' />} text={'Contacts'} />
+                        {
+                            contacts.length ? (
+                                contacts.map(contact => (
+                                    <Contact key={contact.id} userID={contact.id} username={contact.username} />
+                                ))
+                            ) : (
+                                <ContactAlert text={'contacts'} />
+                            )
                         }
                     </div>
-                    <HeaderSideBar icon={<RiContactsBookFill className='text-2xl mr-1 ' />} text={'Contacts'} />
-                    {
-                        contacts.length ? (
-                            contacts.map(contact => (
-                                <Contact key={contact.id} userID={contact.id} username={contact.username}  />
-                                ))
-                                ) : (
-                                    <ContactAlert text={'contacts'} />
-                                    )
-                                }
-                                </div>
                 </div>
             </div>
         </>
