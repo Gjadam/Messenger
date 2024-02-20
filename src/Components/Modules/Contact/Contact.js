@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import AuthContext from '../../../context/authContext';
 export default function Contact({ chatID, userID, username, lastOnline, type }) {
 
+
     const localStorageData = JSON.parse(localStorage.getItem("user"))
     const authContext = useContext(AuthContext)
     // Last Online logic
@@ -72,26 +73,7 @@ export default function Contact({ chatID, userID, username, lastOnline, type }) 
                                 )
                             }
                             <div className=" flex flex-col ">
-                                {
-                                    username === authContext.userInfos.username ? (
-                                        <span className=' font-bold'>Saved Messages</span>
-                                    ) : (
-                                        <span className=' font-bold'>{username.slice(0, 15)}{username.length > 15 && "..."}</span>
-                                    )
-                                }
-                                {
-                                    type === 'contact' &&
-                                        username === authContext.userInfos.username ? (
-                                        null
-                                    ) : (
-
-                                        dayDiff > 7 ? (
-                                            <span className=' text-xs text-zinc-500 dark:text-zinc-200'>last seen a long time ago</span>
-                                        ) : (
-                                            <span className=' text-xs text-zinc-500 dark:text-zinc-200'>last seen recently</span>
-                                        )
-                                    )
-                                }
+                                <span className=' font-bold'>{username.slice(0, 15)}{username.length > 15 && "..."}</span>
                             </div>
                         </div>
                         {
