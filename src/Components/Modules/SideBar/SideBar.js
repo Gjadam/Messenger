@@ -66,12 +66,12 @@ export default function SideBar({ chats }) {
                     }
                 </div>
                 <div className=" group fixed left-6  bottom-6 z-50 p-3 rounded-full  bg-blue-600 dark:bg-zinc-700 dark:hover:bg-zinc-800 hover:bg-blue-700 cursor-pointer transition-colors " onClick={openContactsBox}>
-                    <div className=" flex justify-center items-center relative p-3 ">
-                        <div className="absolute flex justify-center items-center">
-                        <div className={`  ${isContactBoxOpen ? 'translate-x-3' : 'translate-x-16' }  transition-transform`}>
+                    <div className=" flex justify-center items-center   ">
+                        <div className="relative p-3 flex justify-center items-center">
+                        <div className={` absolute  ${isContactBoxOpen ? 'right-0' : '-right-8' }  transition-all ease-in-out`}>
                             <IoClose className=' text-2xl text-white' />
                         </div>
-                        <div className={`${isContactBoxOpen ? '-translate-x-16' : '-translate-x-3' } -translate-x-4 transition-transform`}>
+                        <div className={` absolute ${isContactBoxOpen ? '-left-8' : 'left-4' } -translate-x-4 transition-all ease-in-out`}>
                             <RiContactsBookFill className=' text-2xl text-white' />
                         </div>
                         </div>
