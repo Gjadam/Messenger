@@ -65,13 +65,7 @@ export default function Contact({ chatID, userID, username, lastOnline, type }) 
                     <div className=" flex justify-between items-center w-full py-3 px-5 border-b-1 dark:border-zinc-950">
 
                         <div className=" flex justify-start items-center gap-2">
-                            {
-                                username === authContext.userInfos.username ? (
-                                    <MdDataSaverOn className='text-4xl text-blue-700 dark:text-gray-300' />
-                                ) : (
-                                    <PiUserCircleFill className='text-4xl text-blue-700 dark:text-gray-300' />
-                                )
-                            }
+                            <PiUserCircleFill className='text-4xl text-blue-700 dark:text-gray-300' />
                             <div className=" flex flex-col ">
                                 <span className=' font-bold'>{username.slice(0, 15)}{username.length > 15 && "..."}</span>
                             </div>
