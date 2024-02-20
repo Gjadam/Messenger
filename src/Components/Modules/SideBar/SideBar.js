@@ -4,6 +4,8 @@ import { MdErrorOutline } from "react-icons/md";
 import { NavLink } from 'react-router-dom';
 import { PiChatsCircleDuotone } from "react-icons/pi";
 import { RiContactsBookFill } from "react-icons/ri";
+import { IoPencilSharp } from "react-icons/io5";
+import { BiSolidPencil } from "react-icons/bi";
 import { IoClose } from 'react-icons/io5';
 import ContactAlert from '../ContactAlert/ContactAlert';
 import HeaderSideBar from '../HeaderSideBar/HeaderSideBar';
@@ -67,17 +69,17 @@ export default function SideBar({ chats }) {
                 </div>
                 <div className=" group fixed left-6  bottom-6 z-50 p-3 rounded-full  bg-blue-600 dark:bg-zinc-700 dark:hover:bg-zinc-800 hover:bg-blue-700 cursor-pointer transition-colors " onClick={openContactsBox}>
                     <div className=" flex justify-center items-center   ">
-                        <div className="relative p-3 flex justify-center items-center">
+                        <div className="relative overflow-hidden p-3 flex justify-center items-center">
                         <div className={` absolute  ${isContactBoxOpen ? 'right-0' : '-right-8' }  transition-all ease-in-out`}>
                             <IoClose className=' text-2xl text-white' />
                         </div>
                         <div className={` absolute ${isContactBoxOpen ? '-left-8' : 'left-4' } -translate-x-4 transition-all ease-in-out`}>
-                            <RiContactsBookFill className=' text-2xl text-white' />
+                            <BiSolidPencil className=' text-2xl text-white' />
                         </div>
                         </div>
                     </div>
                     <div className=" absolute left-0 opacity-0 top-3 group-hover:left-12 group-hover:opacity-100  transition-all delay-75 ease-out ">
-                        <span className=' text-sm ml-1 font-bold text-blue-600 dark:text-zinc-100'>{isContactBoxOpen ? 'Close' : 'Contacts'} </span>
+                        <span className=' text-sm ml-1 inline-block select-none min-w-36 font-bold text-blue-600 dark:text-zinc-100'>{isContactBoxOpen ? 'Close' : 'New Message'} </span>
                     </div>
                 </div>
                 <div className={` absolute top-0 bottom-0 ${isContactBoxOpen ? " -left-0" : " -left-[50rem]"}    w-full  transition-all`}>
