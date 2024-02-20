@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import NavBarChat from '../../Components/Modules/NavBarChat/NavBarChat'
 import { PiUserCircleFill } from "react-icons/pi";
 import { IoMdSend } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { RiMenuUnfoldLine } from "react-icons/ri";
-import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import SideBar from '../../Components/Modules/SideBar/SideBar';
-import { useNavigate, useParams } from 'react-router-dom';
-import { io } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
 import AuthContext from '../../context/authContext';
 import ChatAlert from '../../Components/Modules/ChatAlert/ChatAlert';
 import UserMessage from '../../Components/Modules/UserMessage/UserMessage';
@@ -20,7 +18,9 @@ import Picker from 'emoji-picker-react';
 export default function Index() {
 
     const authContext = useContext(AuthContext)
-    const { userID, chatID } = useParams()
+    const socketRef = useRef(null)
+    const scrollRef = useRef(null);
+    const { targetUserID, chatID } = useParams()
     const [chatScrollTarget, setChatScrollTarget] = useState('')
     const [chatScrollTop, setChatScrollTop] = useState('')
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -43,30 +43,50 @@ export default function Index() {
 
 
 
+
+
     // Create Web Socket
     useEffect(() => {
-
-        const newWs = new WebSocket(`${webSocketProtocol}://${host}/chats/${authContext.userInfos.id}/${userID}`);
-        newWs.onmessage = (event) => {
-            setMessages(prevState => [...prevState, { role: "Contact", text: event.data, date_send: `${hours}:${minutes}` }]);
+        if (chatID) {
+            const newWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/connect/${authContext.userInfos.id}`);
+            socketRef.current = newWs
+            newWs.onmessage = (event) => {
+                const contactMessage = JSON.parse(JSON.parse(event.data))
+                setMessages(prevState => [...prevState, { role: "Contact", text: contactMessage.message, date_send: `${hours}:${minutes}` }]);
+            }
+            newWs.onopen = () => {
+                setWs(newWs);
+            };
         }
-        newWs.onopen = () => {
-            setWs(newWs);
-        };
 
-        const newUserOnlineWs = new WebSocket(`${webSocketProtocol}://${host}/chats/check_connection/${authContext.userInfos.id}/${userID}`);
+        return () => {
+            if (socketRef.current) {
+                socketRef.current.close()
+            }
+        };
+    }, [chatID])
+
+    useEffect(() => {
+        const newUserOnlineWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/check_connection/${authContext.userInfos.id}/${targetUserID}`);
         newUserOnlineWs.onmessage = (event) => {
             setWsUserOnline(event.data);
         }
-    }, [userID])
+
+    }, [targetUserID, wsUserOnline])
 
 
     const sendMessage = (event) => {
         event.preventDefault()
         if (ws.readyState === WebSocket.OPEN) {
             if (inputMessage.length > 0) {
-                ws.send(inputMessage)
+                const jsonMessage = JSON.stringify({
+                    message: inputMessage,
+                    sender_id: authContext.userInfos.id,
+                    receiver_id: targetUserID
+                })
+                ws.send(jsonMessage)
                 setMessages(prevState => [...prevState, { role: "User", text: inputMessage, date_send: `${hours}:${minutes}` }]);
+                setShowEmojiPicker(false)
                 setInputMessage('')
             }
         }
@@ -93,8 +113,8 @@ export default function Index() {
 
     // Get Contact information from server
     useEffect(() => {
-        if (userID) {
-            fetch(`https://chattak-alirh.koyeb.app/users/get-by-id/${userID}/`, {
+        if (targetUserID) {
+            fetch(`https://chattak-alirh.koyeb.app/users/get-by-id/${targetUserID}/`, {
                 headers: {
                     'Authorization': `Bearer ${localStorageData.token}`
                 }
@@ -104,7 +124,7 @@ export default function Index() {
                     setContactDatas(data)
                 })
         }
-    }, [userID])
+    }, [targetUserID])
 
 
     // Get All Chats From Server
@@ -138,24 +158,38 @@ export default function Index() {
 
     // Chat Scroll Logic
     const chatScroll = (e) => {
-        const ScrollChat = document.querySelector('.ScrollChat')
         setChatScrollTop(e.target.scrollTop)
-        if (ScrollChat.scrollTop + ScrollChat.clientHeight === ScrollChat.scrollHeight) {
-            setChatScrollTarget('end')
+        if (scrollRef.current) {
+            if (scrollRef.current.scrollTop + scrollRef.current.clientHeight === scrollRef.current.scrollHeight) {
+                setChatScrollTarget('end')
 
-        } else {
-            setChatScrollTarget('start')
+            } else {
+                setChatScrollTarget('start')
+            }
         }
     }
+
     const scrollToEnd = () => {
-        const ScrollChat = document.querySelector('.ScrollChat')
-        ScrollChat.scrollTo(0, ScrollChat.scrollHeight)
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
     }
 
+    useEffect(() => {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [targetUserID, chatID]);
+
+
+    // Emoji Logic
     const handleEmojiClick = (emoji) => {
         setInputMessage(prevState => [prevState + emoji.emoji])
     };
-
 
     return (
         <>
@@ -231,11 +265,11 @@ export default function Index() {
                         contactDatas.id ? (
                             <>
                                 {/* Start Chat */}
-                                <div className="ScrollChat  flex flex-col  w-full z-0 overflow-y-scroll  scroll-smooth  px-3 " onScroll={(e) => chatScroll(e)}>
+                                <div className=" flex flex-col  w-full z-0 overflow-y-scroll scroll-smooth  px-3 " ref={scrollRef} onScroll={(e) => chatScroll(e)}>
                                     {
                                         chatID &&
                                         prevMessages.map(prevMessage => (
-                                            prevMessage.sender_id === +userID ? (
+                                            prevMessage.sender_id === +targetUserID ? (
                                                 <ContactMessage {...prevMessage} />
                                             ) : (
                                                 <UserMessage {...prevMessage} />
