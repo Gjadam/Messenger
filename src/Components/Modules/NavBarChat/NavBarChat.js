@@ -74,7 +74,7 @@ export default function NavBar() {
                     <img src="/images/png/landing-logo.png" class=" w-8 " alt="chatOnly Logo" />
                     <span className=' font-bold text-zinc-950 dark:text-blue-600 '>ChatOnly</span>
                 </Link>
-                <label htmlFor="theme" className=' flex -order-2'>
+                <label htmlFor="theme" className=' flex -order-2 gap-5'>
                 <Link to={'/'} className=' flex items-center md:hidden ml-5'>
                     <img src="/images/png/landing-logo.png" class=" w-8 " alt="chatOnly Logo" />
                 </Link>
