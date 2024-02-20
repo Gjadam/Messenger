@@ -215,7 +215,7 @@ export default function Index() {
                 <div className={` flex ${contactDatas.id ? 'justify-between' : 'justify-start'} items-start flex-col  w-full   bg-zinc-100 dark:bg-zinc-950 relative`}>
                     {/* Start User Information */}
                     <div className="px-2 w-full ">
-                        <div className={` flex ${contactDatas.id ? 'justify-between border-t-2 border-blue-600' : 'justify-end'} items-center rounded-t-2xl z-10 bg-white dark:bg-zinc-900 dark:text-white`}>
+                        <div className={` flex ${contactDatas.id ? 'justify-between border-t-2 shadow-sm border-blue-600' : 'justify-end'} items-center rounded-t-2xl z-10 bg-white dark:bg-zinc-900 dark:text-white`}>
                             {
                                 contactDatas.id &&
                                 <div className=" flex items-center px-3 py-1">
