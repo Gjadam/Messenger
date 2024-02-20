@@ -71,10 +71,13 @@ export default function NavBar() {
         <>
             <div className=" flex justify-between items-center p-2 z-30 bg-zinc-100 dark:dark:bg-zinc-950">
                 <Link to={'/'} className=' hidden items-center md:flex ml-5'>
-                    <img src="/images/png/landing-logo.png" class=" w-8 " alt="FlowBite Logo" />
+                    <img src="/images/png/landing-logo.png" class=" w-8 " alt="chatOnly Logo" />
                     <span className=' font-bold text-zinc-950 dark:text-blue-600 '>ChatOnly</span>
                 </Link>
-                <label htmlFor="theme" className=' -order-1'>
+                <label htmlFor="theme" className=' flex -order-2'>
+                <Link to={'/'} className=' flex items-center md:hidden ml-5'>
+                    <img src="/images/png/landing-logo.png" class=" w-8 " alt="chatOnly Logo" />
+                </Link>
                     <div className=' rounded-full p-2 cursor-pointer hover:bg-blue-600 hover:text-zinc-100  dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900 border-zinc-900  transition-colors'>
                         {
                             isDark ? (
