@@ -18,6 +18,7 @@ import { FaUser } from "react-icons/fa";
 import { MdEmojiEmotions } from "react-icons/md";
 import Picker from 'emoji-picker-react';
 import { host, webSocketProtocol } from '../../WebSockekConfig/WebSockekConfig';
+import NotificationBtn from '../../Components/Modules/NotificationBtn/NotificationBtn';
 export default function Index() {
 
     const authContext = useContext(AuthContext)
@@ -108,7 +109,6 @@ export default function Index() {
             setNotificationData('')
         }, 6000);
         setNotificationData(notification)
-        console.log(notification);
     }
 
     const closeNotification = () => {
@@ -269,13 +269,7 @@ export default function Index() {
                                         )
                                     }
                                     <div className=" flex flex-col ms-2">
-                                        {
-                                            contactDatas.username === authContext.userInfos.username ? (
-                                                <span className=' font-bold'>Saved Messages</span>
-                                            ) : (
-                                                <span className=' font-bold'>{contactDatas.username}</span>
-                                            )
-                                        }
+                                        <span className=' font-bold'>{contactDatas.username}</span>
                                         <div className=" flex justify-start items-center">
                                             {
                                                 contactDatas.username === authContext.userInfos.username ? (
@@ -365,16 +359,20 @@ export default function Index() {
                     }
                     {
                         // Start Notification message
-                        <div className={`fixed ${notificationData.sender_id ? ' right-0' : ' -right-[50rem]'} bottom-5 z-50 md:w-96 w-full px-5 transition-all`}>
-                            <div className={` flex justify-center items-start flex-col gap-1  p-3 rounded-2xl border-t-2 shadow-md border-blue-600  bg-white`}>
-                                <div className=" flex justify-between items-center w-full border-b-1 mb-1 pb-2">
+                        <div className={`fixed ${notificationData.sender_id ? ' right-0' : ' -right-[50rem]'} bottom-5 z-50 md:w-96 w-full px-5 transition-all ease-in-out`}>
+                            <div className={` flex justify-center items-start flex-col gap-1  p-3 rounded-2xl border-t-2 shadow-md border-blue-600 bg-white dark:bg-zinc-900 `}>
+                                <div className=" flex justify-between items-center w-full border-b-1 dark:text-white dark:border-zinc-950 mb-1 pb-2">
                                     <span className=' flex items-center  text-md font-bold'><RiMessage3Fill className=' mr-1  text-xl text-blue-600' /> New Message</span>
                                     <span className=' text-md  font-bold flex items-center'>{notificationData.sender_username}<FaUser className=' text-blue-600 ml-1' /></span>
                                 </div>
-                                <p className=' text-break text-sm  text-zinc-700 mt-1 p-1'>{notificationData.message}</p>
-                                <div className=" flex justify-around items-center w-full pt-2 mt-2 border-t-1">
-                                    <button className=' text-xs  text-white bg-zinc-400 hover:bg-blue-600 p-2 rounded-full transition-colors' onClick={closeNotification}>Ok</button>
-                                    <button className=' text-xs text-white bg-zinc-400 hover:bg-blue-600 p-2 rounded-full transition-colors' onClick={() => navigateFromNotificationToChat(notificationData.sender_id)}>Open chat</button>
+                                <p className=' text-break text-sm  text-zinc-700 dark:text-zinc-200 mt-1 p-1'>{notificationData.message}</p>
+                                <div className=" flex justify-around items-center w-full pt-2 mt-2 border-t-1 dark:border-zinc-950">
+                                    <div onClick={closeNotification}>
+                                        <NotificationBtn text={'Ok'} />
+                                    </div>
+                                    <div onClick={() => navigateFromNotificationToChat(notificationData.sender_id)}>
+                                        <NotificationBtn text={'Go to chat'} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
