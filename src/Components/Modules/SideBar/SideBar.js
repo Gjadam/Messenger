@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Contact from '../Contact/Contact'
-import { MdErrorOutline } from "react-icons/md";
-import { NavLink } from 'react-router-dom';
 import { PiChatsCircleDuotone } from "react-icons/pi";
 import { RiContactsBookFill } from "react-icons/ri";
-import { IoPencilSharp } from "react-icons/io5";
 import { BiSolidPencil } from "react-icons/bi";
 import { IoClose } from 'react-icons/io5';
 import ContactAlert from '../ContactAlert/ContactAlert';
