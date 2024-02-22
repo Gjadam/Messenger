@@ -61,7 +61,7 @@ export default function Landing() {
                     </a>
                     &
                     <a href="https://github.com/alirahmnicode" className=' mx-1 hover:text-sky-500 transition-colors'>
-                        AliRahmaniCode
+                        AliRahmani.py
                     </a>
                     | 2024 ChatOnly
                 </span>
