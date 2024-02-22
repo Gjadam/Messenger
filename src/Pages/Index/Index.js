@@ -6,18 +6,22 @@ import { IoClose } from "react-icons/io5";
 import { RiMenuUnfoldLine } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
 import SideBar from '../../Components/Modules/SideBar/SideBar';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import AuthContext from '../../context/authContext';
 import ChatAlert from '../../Components/Modules/ChatAlert/ChatAlert';
 import UserMessage from '../../Components/Modules/UserMessage/UserMessage';
 import ContactMessage from '../../Components/Modules/ContactMessage/ContactMessage';
 import { MdDataSaverOn } from 'react-icons/md';
 import { MdKeyboard } from "react-icons/md";
+import { RiMessage3Fill } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
 import { MdEmojiEmotions } from "react-icons/md";
 import Picker from 'emoji-picker-react';
+import { host, webSocketProtocol } from '../../WebSockekConfig/WebSockekConfig';
 export default function Index() {
 
     const authContext = useContext(AuthContext)
+    const navigate = useNavigate()
     const socketRef = useRef(null)
     const scrollRef = useRef(null);
     const { targetUserID, chatID } = useParams()
@@ -25,6 +29,8 @@ export default function Index() {
     const [chatScrollTop, setChatScrollTop] = useState('')
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [chats, setChats] = useState([])
+    const [notificationData, setNotificationData] = useState([])
+    const [singleChatId, setSingleChatId] = useState([])
     const [contactDatas, setContactDatas] = useState([])
     const [prevMessages, setPrevMessages] = useState([])
     const [messages, setMessages] = useState([])
@@ -32,23 +38,16 @@ export default function Index() {
 
     const [ws, setWs] = useState({})
     const [wsUserOnline, setWsUserOnline] = useState(false)
-    const host = 'chattak-alirh.koyeb.app';
-    const protocol = window.location.protocol;
-    const webSocketProtocol = protocol === "http:" ? "ws" : "wss";
+
     const localStorageData = JSON.parse(localStorage.getItem("user"))
     // Get time
     const currentDate = new Date();
     const hours = currentDate.getHours();
     const minutes = currentDate.getMinutes();
-
-
-
-
-
     // Create Web Socket
     useEffect(() => {
-        if (chatID) {
-            const newWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/connect/${authContext.userInfos.id}`);
+        if (targetUserID) {
+            const newWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/connect/${authContext.userInfos.id}/${targetUserID}`);
             socketRef.current = newWs
             newWs.onmessage = (event) => {
                 const contactMessage = JSON.parse(JSON.parse(event.data))
@@ -64,15 +63,7 @@ export default function Index() {
                 socketRef.current.close()
             }
         };
-    }, [chatID])
-
-    useEffect(() => {
-        const newUserOnlineWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/check_connection/${authContext.userInfos.id}/${targetUserID}`);
-        newUserOnlineWs.onmessage = (event) => {
-            setWsUserOnline(event.data);
-        }
-
-    }, [targetUserID, wsUserOnline])
+    }, [targetUserID])
 
 
     const sendMessage = (event) => {
@@ -88,13 +79,50 @@ export default function Index() {
                 setMessages(prevState => [...prevState, { role: "User", text: inputMessage, date_send: `${hours}:${minutes}` }]);
                 setShowEmojiPicker(false)
                 setInputMessage('')
+                if (scrollRef.current) {
+                    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+                }
             }
         }
     }
 
+    // User is Online or Offline
+    useEffect(() => {
+        const newUserOnlineWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/check_connection/${authContext.userInfos.id}/${targetUserID}`);
+        newUserOnlineWs.onmessage = (event) => {
+            setWsUserOnline(event.data);
+        }
 
-    // Sidebar opening classes
+    }, [targetUserID, wsUserOnline])
+
+    // Notification
+    useEffect(() => {
+        const newNotificationWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/notification/${authContext.userInfos.id}`);
+        newNotificationWs.onmessage = (event) => {
+            showNotificationHandler(JSON.parse(JSON.parse(event.data)))
+        }
+    }, [])
+
+    const showNotificationHandler = (notification) => {
+        setTimeout(() => {
+            setNotificationData('')
+        }, 6000);
+        setNotificationData(notification)
+        console.log(notification);
+    }
+
+    const closeNotification = () => {
+        setNotificationData('')
+    }
+
+    const navigateFromNotificationToChat = (senderID) => {
+        navigate(`/chat/${senderID}`)
+        setNotificationData('')
+    }
+
+
     const openSideBar = () => {
+        // Sidebar opening classes
         const sideBar = document.querySelector(".side-bar")
         sideBar.classList.remove("opacity-0")
         sideBar.classList.remove("w-0")
@@ -155,6 +183,20 @@ export default function Index() {
         }
     }, [chatID])
 
+    // Get User single chatID
+    useEffect(() => {
+        if (targetUserID) {
+            fetch(`https://chattak-alirh.koyeb.app/chats/user/${targetUserID}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorageData.token}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setSingleChatId(data)
+                })
+        }
+    }, [targetUserID])
 
     // Chat Scroll Logic
     const chatScroll = (e) => {
@@ -320,6 +362,23 @@ export default function Index() {
                         ) : (
                             <ChatAlert />
                         )
+                    }
+                    {
+                        // Start Notification message
+                        <div className={`fixed ${notificationData.sender_id ? ' right-0' : ' -right-[50rem]'} bottom-5 z-50 md:w-96 w-full px-5 transition-all`}>
+                            <div className={` flex justify-center items-start flex-col gap-1  p-3 rounded-2xl border-t-2 shadow-md border-blue-600  bg-white`}>
+                                <div className=" flex justify-between items-center w-full border-b-1 mb-1 pb-2">
+                                    <span className=' flex items-center  text-md font-bold'><RiMessage3Fill className=' mr-1  text-xl text-blue-600' /> New Message</span>
+                                    <span className=' text-md  font-bold flex items-center'>{notificationData.sender_username}<FaUser className=' text-blue-600 ml-1' /></span>
+                                </div>
+                                <p className=' text-break text-sm  text-zinc-700 mt-1 p-1'>{notificationData.message}</p>
+                                <div className=" flex justify-around items-center w-full pt-2 mt-2 border-t-1">
+                                    <button className=' text-xs  text-white bg-zinc-400 hover:bg-blue-600 p-2 rounded-full transition-colors' onClick={closeNotification}>Ok</button>
+                                    <button className=' text-xs text-white bg-zinc-400 hover:bg-blue-600 p-2 rounded-full transition-colors' onClick={() => navigateFromNotificationToChat(notificationData.sender_id)}>Open chat</button>
+                                </div>
+                            </div>
+                        </div>
+                        // End Notification message
                     }
                 </div>
             </div >
