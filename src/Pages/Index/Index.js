@@ -31,9 +31,8 @@ export default function Index() {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [chats, setChats] = useState([])
     const [notificationData, setNotificationData] = useState([])
-    const [singleChatId, setSingleChatId] = useState([])
+    // const [singleChatId, setSingleChatId] = useState([])
     const [contactDatas, setContactDatas] = useState([])
-    const [prevMessages, setPrevMessages] = useState([])
     const [messages, setMessages] = useState([])
     const [inputMessage, setInputMessage] = useState('');
 
@@ -52,7 +51,7 @@ export default function Index() {
             socketRef.current = newWs
             newWs.onmessage = (event) => {
                 const contactMessage = JSON.parse(JSON.parse(event.data))
-                setMessages(prevState => [...prevState, { role: "Contact", text: contactMessage.message, date_send: `${hours}:${minutes}` }]);
+                setMessages(prevState => [...prevState, { role: "Contact", sender_id: contactMessage.sender_id, text: contactMessage.message, date_send: `${hours}:${minutes}` }]);
             }
             newWs.onopen = () => {
                 setWs(newWs);
@@ -77,7 +76,7 @@ export default function Index() {
                     receiver_id: targetUserID
                 })
                 ws.send(jsonMessage)
-                setMessages(prevState => [...prevState, { role: "User", text: inputMessage, date_send: `${hours}:${minutes}` }]);
+                setMessages(prevState => [...prevState, { role: 'User', sender_id: authContext.userInfos.id, text: inputMessage, date_send: `${hours}:${minutes}` }]);
                 setShowEmojiPicker(false)
                 setInputMessage('')
                 if (scrollRef.current) {
@@ -89,12 +88,15 @@ export default function Index() {
 
     // User is Online or Offline
     useEffect(() => {
-        const newUserOnlineWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/check_connection/${authContext.userInfos.id}/${targetUserID}`);
-        newUserOnlineWs.onmessage = (event) => {
-            setWsUserOnline(event.data);
+        if (authContext.userInfos.id) {
+            if (targetUserID) {
+                const newUserOnlineWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/check_connection/${authContext.userInfos.id}/${targetUserID}`);
+                newUserOnlineWs.onmessage = (event) => {
+                    setWsUserOnline(event.data);
+                }
+            }
         }
-
-    }, [targetUserID, wsUserOnline])
+    }, [targetUserID])
 
     // Notification
     useEffect(() => {
@@ -107,7 +109,7 @@ export default function Index() {
     const showNotificationHandler = (notification) => {
         setTimeout(() => {
             setNotificationData('')
-        }, 6000);
+        }, 8000);
         setNotificationData(notification)
     }
 
@@ -178,25 +180,25 @@ export default function Index() {
             })
                 .then(res => res.json())
                 .then(data => {
-                    setPrevMessages(data)
+                    setMessages(data)
                 })
         }
     }, [chatID])
 
     // Get User single chatID
-    useEffect(() => {
-        if (targetUserID) {
-            fetch(`https://chattak-alirh.koyeb.app/chats/user/${targetUserID}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorageData.token}`
-                }
-            })
-                .then(res => res.json())
-                .then(data => {
-                    setSingleChatId(data)
-                })
-        }
-    }, [targetUserID])
+    // useEffect(() => {
+    //     if (targetUserID) {
+    //         fetch(`https://chattak-alirh.koyeb.app/chats/user/${targetUserID}`, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${localStorageData.token}`
+    //             }
+    //         })
+    //             .then(res => res.json())
+    //             .then(data => {
+    //                 setSingleChatId(data)
+    //             })
+    //     }
+    // }, [targetUserID])
 
     // Chat Scroll Logic
     const chatScroll = (e) => {
@@ -261,13 +263,7 @@ export default function Index() {
                             {
                                 contactDatas.id &&
                                 <div className=" flex items-center px-3 py-1">
-                                    {
-                                        contactDatas.username === authContext.userInfos.username ? (
-                                            <MdDataSaverOn className='text-5xl text-blue-700 dark:text-gray-300' />
-                                        ) : (
-                                            <PiUserCircleFill className='text-5xl text-blue-700 dark:text-gray-300' />
-                                        )
-                                    }
+                                    <PiUserCircleFill className='text-5xl text-blue-700 dark:text-gray-300' />
                                     <div className=" flex flex-col ms-2">
                                         <span className=' font-bold'>{contactDatas.username}</span>
                                         <div className=" flex justify-start items-center">
@@ -303,21 +299,11 @@ export default function Index() {
                                 {/* Start Chat */}
                                 <div className=" flex flex-col  w-full z-0 overflow-y-scroll scroll-smooth  px-3 " ref={scrollRef} onScroll={(e) => chatScroll(e)}>
                                     {
-                                        chatID &&
-                                        prevMessages.map(prevMessage => (
-                                            prevMessage.sender_id === +targetUserID ? (
-                                                <ContactMessage {...prevMessage} />
-                                            ) : (
-                                                <UserMessage {...prevMessage} />
-                                            )
-                                        ))
-                                    }
-                                    {
                                         messages.map(message => (
-                                            message.role === "User" ? (
-                                                <UserMessage  {...message} />
-                                            ) : (
+                                            message.sender_id === +targetUserID ? (
                                                 <ContactMessage  {...message} />
+                                            ) : (
+                                                <UserMessage  {...message} />
                                             )
                                         ))
                                     }
@@ -362,8 +348,8 @@ export default function Index() {
                         <div className={`fixed ${notificationData.sender_id ? ' right-0' : ' -right-[50rem]'} bottom-5 z-50 md:w-96 w-full px-5 transition-all ease-in-out`}>
                             <div className={` flex justify-center items-start flex-col gap-1  p-3 rounded-2xl border-t-2 shadow-md border-blue-600 bg-white dark:bg-zinc-900 `}>
                                 <div className=" flex justify-between items-center w-full border-b-1 dark:text-white dark:border-zinc-950 mb-1 pb-2">
-                                    <span className=' flex items-center  text-md font-bold'><RiMessage3Fill className=' mr-1  text-xl text-blue-600' /> New Message</span>
-                                    <span className=' text-md  font-bold flex items-center'>{notificationData.sender_username}<FaUser className=' text-blue-600 ml-1' /></span>
+                                    <span className=' flex items-center  text-sm font-bold'><RiMessage3Fill className=' mr-1  text-xl text-blue-600' /> New Message</span>
+                                    <span className=' text-sm  font-bold flex items-center'>{notificationData.sender_username}<FaUser className=' text-blue-600 ml-1' /></span>
                                 </div>
                                 <p className=' text-break text-sm  text-zinc-700 dark:text-zinc-200 mt-1 p-1'>{notificationData.message}</p>
                                 <div className=" flex justify-around items-center w-full pt-2 mt-2 border-t-1 dark:border-zinc-950">
