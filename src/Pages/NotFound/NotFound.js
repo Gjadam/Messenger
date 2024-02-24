@@ -9,7 +9,7 @@ export default function NotFoundNotFound() {
       <div className=" container flex justify-center items-center flex-col gap-12">
         <img src="/images/png/NotFound.png" alt="NotFound" className=' w-48 md:w-96' />
         <span className=' tracking-wide text-center text-5xl font-bold text-lg  md:text-3xl text-white'>Ooops...Something went wront</span>
-        <Link to={'/'} className=' rounded-full p-5 text-sky-600 bg-white font-bold  hover:bg-sky-600 hover:text-white transition-colors'>
+        <Link to={'/'} className=' rounded-full p-4 text-sky-600 bg-white font-bold  hover:bg-sky-600 hover:text-white transition-colors'>
           <span className=' flex items-center gap-1'><IoIosHome className=' text-2xl' /> Go To Home</span>
         </Link>
       </div>
