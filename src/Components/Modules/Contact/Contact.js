@@ -56,7 +56,7 @@ export default function Contact({ chatID, userID, username, lastOnline, type }) 
                         <div className=" flex justify-start items-center gap-2">
                             <PiUserCircleFill className='text-4xl text-blue-700 dark:text-gray-300' />
                             <div className=" flex flex-col ">
-                                <span className=' font-bold'>{username.slice(0, 15)}{username.length > 15 && "..."}</span>
+                                <span className=' select-none font-bold'>{username.slice(0, 15)}{username.length > 15 && "..."}</span>
                             </div>
                         </div>
                         {

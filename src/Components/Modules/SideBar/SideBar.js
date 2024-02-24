@@ -83,7 +83,7 @@ export default function SideBar({ chats }) {
                     <div className="bg-white dark:bg-zinc-900 w-full h-full">
 
                         <div className="  m-2">
-                            <input type="search" placeholder='Search' onChange={(e) => setSearchValue(e.target.value)} className=' rounded-full sticky top-0  w-full outline-none px-5 py-2  bg-zinc-100 dark:bg-zinc-800 dark:text-white' />
+                            <input type="search" placeholder='Search' onChange={(e) => setSearchValue(e.target.value)} className=' placeholder:select-none rounded-full sticky top-0  w-full outline-none px-5 py-2  bg-zinc-100 dark:bg-zinc-800 dark:text-white' />
                             {
                                 searchValue.length &&
                                     searchData.length > 0 ? (

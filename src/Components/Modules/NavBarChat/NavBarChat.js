@@ -118,7 +118,7 @@ export default function NavBar() {
                         </div>
                         <div className=" opacity-0 hidden group-hover:block  group-hover:opacity-100 absolute right-2 top-8 w-44  rounded-md z-50  shadow bg-white overflow-hidden  dark:bg-zinc-950 dark:text-white">
                             <div className="flex justify-end items-center  gap-2 p-3 font-bold bg-gray-50 border-b-1  dark:bg-zinc-900 dark:text-white dark:border-zinc-950">
-                                <span className=' text-sm'>Options</span>
+                                <span className=' select-none text-sm'>Options</span>
                                 <IoMdSettings className='text-xl text-gray-600' />
                             </div>
                             <div className="flex justify-end items-center  gap-2 p-3">
