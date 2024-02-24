@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { IoCheckmarkDoneOutline } from 'react-icons/io5'
 import { IoCheckmarkOutline } from "react-icons/io5";
+import AuthContext from '../../../context/authContext';
 export default function UserMessage(props) {
+
 
 
     return (
@@ -15,8 +17,8 @@ export default function UserMessage(props) {
                             {
                                 props.role === "User" ? (
                                     <span className='  text-xs'>{props.date_send}</span>
-                                ) : (
-                                    <span className='  text-xs'>{props.date_send?.slice(11, 16)}</span>
+                                    ) : (
+                                        <span className='  text-xs'>{props.date_send?.slice(11, 16)}</span>
                                 )
                             }
                             {
