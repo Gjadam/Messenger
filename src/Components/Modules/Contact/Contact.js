@@ -3,8 +3,7 @@ import { PiUserCircleFill } from "react-icons/pi";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { MdDataSaverOn } from "react-icons/md";
 import Swal from 'sweetalert2';
-import { NavLink, useParams } from 'react-router-dom';
-import { host, webSocketProtocol } from '../../../WebSockekConfig/WebSockekConfig';
+import { NavLink } from 'react-router-dom';
 import AuthContext from '../../../context/authContext';
 
 export default function Contact({ chatID, userID, username, lastOnline, type }) {

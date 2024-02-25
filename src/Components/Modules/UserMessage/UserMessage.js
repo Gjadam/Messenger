@@ -1,10 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { IoCheckmarkDoneOutline } from 'react-icons/io5'
 import { IoCheckmarkOutline } from "react-icons/io5";
-import AuthContext from '../../../context/authContext';
 export default function UserMessage(props) {
-
-
 
     return (
         <>
