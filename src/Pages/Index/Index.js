@@ -11,7 +11,6 @@ import AuthContext from '../../context/authContext';
 import ChatAlert from '../../Components/Modules/ChatAlert/ChatAlert';
 import UserMessage from '../../Components/Modules/UserMessage/UserMessage';
 import ContactMessage from '../../Components/Modules/ContactMessage/ContactMessage';
-import { MdDataSaverOn } from 'react-icons/md';
 import { MdKeyboard } from "react-icons/md";
 import { RiMessage3Fill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
