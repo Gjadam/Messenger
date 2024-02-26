@@ -76,21 +76,21 @@ export default function NavBar() {
                 </Link>
                 <label htmlFor="theme" className=' flex -order-2 gap-5'>
                 <Link to={'/'} className=' flex items-center md:hidden ml-5'>
-                    <img src="/images/png/landing-logo.png" class=" w-8 " alt="chatOnly Logo" />
+                    <img src="/images/png/landing-logo.png" class=" w-7 " alt="chatOnly Logo" />
                 </Link>
                     <div className=' rounded-full p-2 cursor-pointer hover:bg-blue-600 hover:text-zinc-100  dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900 border-zinc-900  transition-colors'>
                         {
                             isDark ? (
-                                <IoIosMoon className=' text-2xl' />
+                                <IoIosMoon className=' text-xl' />
                             ) : (
-                                <GrSun className=' text-2xl' />
+                                <GrSun className=' text-xl' />
                             )
                         }
                     </div>
                     <input type="checkbox" id='theme' className='darkModeCheck hidden' onChange={(e) => darkModeHandler(e)} />
                 </label>
                 <div className="flex items-center gap-5">
-                    <div className=" relative flex justify-center items-center flex-col  text-blue-600 dark:text-zinc-100">
+                    <div className=" relative flex justify-center items-center flex-col mb-1  text-blue-600 dark:text-zinc-100">
                         {
                             batteryCharging ? (
                                 <>
