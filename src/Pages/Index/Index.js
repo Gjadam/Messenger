@@ -108,8 +108,8 @@ export default function Index() {
         setNotificationData('')
     }
 
-    const navigateFromNotificationToChat = (senderID) => {
-        navigate(`/chat/${senderID}`)
+    const navigateFromNotificationToChat = (senderID, chatID) => {
+        navigate(`/chat/${senderID}/${chatID}`)
         setNotificationData('')
     }
 
@@ -150,15 +150,17 @@ export default function Index() {
 
     // Get All Chats From Server
     useEffect(() => {
-        fetch(`https://chattak-alirh.koyeb.app/chats/`, {
-            headers: {
-                'Authorization': `Bearer ${localStorageData.token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                setChats(data)
+        if(localStorageData) {
+            fetch(`https://chattak-alirh.koyeb.app/chats/`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorageData.token}`
+                }
             })
+                .then(res => res.json())
+                .then(data => {
+                    setChats(data)
+                })
+        }
     }, [])
 
     // Get All Chat Messages From Server
@@ -225,6 +227,7 @@ export default function Index() {
     const handleEmojiClick = (emoji) => {
         setInputMessage(prevState => [prevState + emoji.emoji])
     };
+
 
     return (
         <>
@@ -347,7 +350,7 @@ export default function Index() {
                                     <div onClick={closeNotification}>
                                         <NotificationBtn text={'Ok'} />
                                     </div>
-                                    <div onClick={() => navigateFromNotificationToChat(notificationData.sender_id)}>
+                                    <div onClick={() => navigateFromNotificationToChat(notificationData.sender_id, notificationData.chat_id)}>
                                         <NotificationBtn text={'Go to chat'} />
                                     </div>
                                 </div>
