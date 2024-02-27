@@ -87,7 +87,9 @@ export default function Index() {
                 }
             }
         }
-    }, [targetUserID])
+    }, [wsUserOnline])
+
+
 
     // Notification
     useEffect(() => {
@@ -150,7 +152,7 @@ export default function Index() {
 
     // Get All Chats From Server
     useEffect(() => {
-        if(localStorageData) {
+        if (localStorageData) {
             fetch(`https://chattak-alirh.koyeb.app/chats/`, {
                 headers: {
                     'Authorization': `Bearer ${localStorageData.token}`
@@ -177,6 +179,7 @@ export default function Index() {
                 })
         }
     }, [chatID])
+
 
     // Get User single chatID
     // useEffect(() => {
@@ -247,7 +250,7 @@ export default function Index() {
                         </div>
                         <IoClose className='text-2xl text-white hover:text-red-700 transition-colors cursor-pointer' onClick={closeSideBar} />
                     </div>
-                    <SideBar chats={chats} />
+                    <SideBar chats={chats} closeSideBar={closeSideBar} />
                 </div>
                 {/* End SideBar For Mobile */}
                 <div className={` flex ${targetUserID ? 'justify-between' : 'justify-start'} items-start flex-col  w-full   bg-zinc-100 dark:bg-zinc-950 relative`}>
