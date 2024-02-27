@@ -15,9 +15,6 @@ export default function NavBar() {
     const authContext = useContext(AuthContext)
     const navigate = useNavigate()
     const [isDark, setIsDark] = useState(false)
-    const [batteryLevel, setBatteryLevel] = useState(0)
-    const [batteryCharging, satBatteryCharging] = useState(false)
-
 
     // Dark Mode Logic
     useEffect(() => {
@@ -53,20 +50,6 @@ export default function NavBar() {
         navigate('/')
     }
 
-    useEffect(() => {
-        if ('getBattery' in navigator) {
-            navigator.getBattery().then(function (battery) {
-                const level = battery.level;
-                const charging = battery.charging;
-                setBatteryLevel(level)
-                satBatteryCharging(charging)
-
-            });
-        }
-    }, [batteryLevel, batteryCharging])
-
-
-
     return (
         <>
             <div className=" flex justify-between items-center p-2 z-30 bg-zinc-100 dark:dark:bg-zinc-950">
@@ -90,33 +73,11 @@ export default function NavBar() {
                     <input type="checkbox" id='theme' className='darkModeCheck hidden' onChange={(e) => darkModeHandler(e)} />
                 </label>
                 <div className="flex items-center gap-5">
-                    <div className=" relative flex justify-center items-center flex-col mb-1  text-blue-600 dark:text-zinc-100">
-                        {
-                            batteryCharging ? (
-                                <>
-                                    <PiBatteryChargingFill className=' text-2xl ' />
-                                    <span className=' absolute -left-1 top-[1.1rem] text-[0.5rem] select-none  font-bold'>Charging</span>
-                                </>
-                            ) : (
-                                +batteryLevel * 100 > 50 ? (
-                                    <>
-                                        <PiBatteryFullFill className=' text-2xl ' />
-                                        <span className=' absolute  top-[1.1rem] text-[0.5rem] select-none  font-bold'>{+batteryLevel * 100}%</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <PiBatteryMediumFill className=' text-2xl ' />
-                                        <span className=' absolute  top-[1.1rem] text-[0.5rem] select-none  font-bold'>{+batteryLevel * 100}%</span>
-                                    </>
-                                )
-                            )
-                        }
-                    </div>
                     <div className="group relative  ">
                         <div className=" p-2 rounded-full hover:bg-blue-600 hover:text-zinc-100  dark:text-zinc-100 dark:hover:bg-zinc-100 dark:hover:text-zinc-900 transition-colors ">
                             <FiMoreVertical className=' text-xl cursor-pointer ' />
                         </div>
-                        <div className=" opacity-0 hidden group-hover:block  group-hover:opacity-100 absolute right-2 top-8 w-44  rounded-md z-50  shadow bg-white overflow-hidden  dark:bg-zinc-950 dark:text-white">
+                        <div className=" opacity-0 hidden group-hover:block  group-hover:opacity-100 absolute right-2 top-8 w-44  rounded-2xl z-50 border-b-1 border-blue-600  shadow bg-white overflow-hidden  dark:bg-zinc-950 dark:text-white">
                             <div className="flex justify-end items-center  gap-2 p-3 font-bold bg-gray-50 border-b-1  dark:bg-zinc-900 dark:text-white dark:border-zinc-950">
                                 <span className=' select-none text-sm'>Options</span>
                                 <IoMdSettings className='text-xl text-gray-600' />
