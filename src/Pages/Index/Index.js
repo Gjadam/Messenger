@@ -22,7 +22,6 @@ export default function Index() {
 
     const authContext = useContext(AuthContext)
     const navigate = useNavigate()
-    const socketRef = useRef(null)
     const scrollRef = useRef(null);
     const { targetUserID, chatID } = useParams()
     const [chatScrollTarget, setChatScrollTarget] = useState('')
@@ -47,7 +46,6 @@ export default function Index() {
     useEffect(() => {
         if (targetUserID) {
             const newWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/connect/${authContext.userInfos.id}/${targetUserID}`);
-            socketRef.current = newWs
             newWs.onmessage = (event) => {
                 const contactMessage = JSON.parse(JSON.parse(event.data))
                 setMessages(prevState => [...prevState, { role: "Contact", sender_id: contactMessage.sender_id, text: contactMessage.message, date_send: `${hours}:${minutes}` }]);
@@ -56,12 +54,6 @@ export default function Index() {
                 setWs(newWs);
             };
         }
-
-        return () => {
-            if (socketRef.current) {
-                socketRef.current.close()
-            }
-        };
     }, [targetUserID])
 
 
@@ -255,12 +247,12 @@ export default function Index() {
                     <SideBar chats={chats} />
                 </div>
                 {/* End SideBar For Mobile */}
-                <div className={` flex ${contactDatas.id ? 'justify-between' : 'justify-start'} items-start flex-col  w-full   bg-zinc-100 dark:bg-zinc-950 relative`}>
+                <div className={` flex ${targetUserID ? 'justify-between' : 'justify-start'} items-start flex-col  w-full   bg-zinc-100 dark:bg-zinc-950 relative`}>
                     {/* Start User Information */}
                     <div className="px-2 w-full ">
-                        <div className={` flex ${contactDatas.id ? 'justify-between border-t-2 shadow-sm border-blue-600' : 'justify-end'} items-center rounded-t-2xl z-10 bg-white dark:bg-zinc-900 dark:text-white`}>
+                        <div className={` flex ${targetUserID ? 'justify-between border-t-2 shadow-sm border-blue-600' : 'justify-end'} items-center rounded-t-2xl z-10 bg-white dark:bg-zinc-900 dark:text-white`}>
                             {
-                                contactDatas.id &&
+                                targetUserID &&
                                 <div className=" flex items-center px-3 py-1">
                                     <PiUserCircleFill className='text-5xl text-blue-700 dark:text-gray-300' />
                                     <div className=" flex flex-col ms-2">
@@ -293,7 +285,7 @@ export default function Index() {
                     </div>
                     {/* End User Information */}
                     {
-                        contactDatas.id ? (
+                        targetUserID ? (
                             <>
                                 {/* Start Chat */}
                                 <div className=" flex flex-col  w-full z-0 overflow-y-scroll scroll-smooth  px-3 " ref={scrollRef} onScroll={(e) => chatScroll(e)}>
@@ -315,13 +307,13 @@ export default function Index() {
 
                                             {
                                                 showEmojiPicker ? (
-                                                    <MdKeyboard className=' text-blue-600 text-4xl' onClick={() => setShowEmojiPicker(false)} />
+                                                    <MdKeyboard className=' text-blue-600 text-3xl md:text-4xl' onClick={() => setShowEmojiPicker(false)} />
                                                 ) : (
-                                                    <MdEmojiEmotions className=' text-blue-600  text-4xl ' onClick={() => setShowEmojiPicker(true)} />
+                                                    <MdEmojiEmotions className=' text-blue-600  text-3xl md:text-4xl ' onClick={() => setShowEmojiPicker(true)} />
                                                 )
                                             }
                                         </div>
-                                        <div className={`${showEmojiPicker ? (' opacity-100') : (" opacity-0")} bg-white rounded-full absolute left-0 bottom-14 z-10 transition-opacity ease-out`}>
+                                        <div className={`${showEmojiPicker ? (' opacity-100') : (" opacity-0")} bg-white rounded-full absolute left-0 bottom-14 z-10 transition-opacity select-none  ease-out`}>
                                             {showEmojiPicker && (
                                                 <Picker reactionsDefaultOpen={true} onEmojiClick={handleEmojiClick} />
                                             )}
@@ -331,8 +323,8 @@ export default function Index() {
                                         <IoIosArrowDown className=' mt-1 text-3xl text-zinc-100 dark:text-blue-600' />
                                     </div>
                                     <input type="text" placeholder='Message' value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} className='  w-full p-4 h-full rounded-full mx-2  outline-none bg-white dark:bg-zinc-900 dark:text-white' />
-                                    <button className='absolute right-5 bottom-4.5 z-10 p-1 bg-white dark:bg-zinc-900 '>
-                                        <IoMdSend className='  text-blue-600 text-2xl' />
+                                    <button className={` flex justify-center items-center absolute right-4 bottom-4.5 z-10 ${inputMessage.length > 0 && 'bg-blue-600 text-white'} text-blue-600  rounded-full p-2   transition-colors`}>
+                                        <IoMdSend className='   pl-1 text-2xl' />
                                     </button>
                                 </form>
                                 {/* End Input Chat */}
