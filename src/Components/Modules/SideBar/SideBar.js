@@ -33,15 +33,17 @@ export default function SideBar({ chats }) {
     }, [searchValue])
 
     useEffect(() => {
-        fetch(`https://chattak-alirh.koyeb.app/users/contacts/`, {
-            headers: {
-                'Authorization': `Bearer ${localStorageData.token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                setContacts(data)
+        if(localStorageData) {
+            fetch(`https://chattak-alirh.koyeb.app/users/contacts/`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorageData.token}`
+                }
             })
+                .then(res => res.json())
+                .then(data => {
+                    setContacts(data)
+                })
+        }
     }, [contacts])
 
 
