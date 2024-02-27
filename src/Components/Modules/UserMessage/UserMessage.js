@@ -1,7 +1,28 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { IoCheckmarkDoneOutline } from 'react-icons/io5'
 import { IoCheckmarkOutline } from "react-icons/io5";
+import { useParams } from 'react-router-dom';
 export default function UserMessage(props) {
+
+    const { chatID } = useParams()
+    const [isSeen, setIsSeen] = useState(false)
+    const localStorageData = JSON.parse(localStorage.getItem("user"))
+
+    // Get Seen message information from server
+    useEffect(() => {
+        if (chatID) {
+            fetch(`https://chattak-alirh.koyeb.app/chats/messages/seen/?chat_id=${chatID}`, {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${localStorageData.token}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setIsSeen(data)
+                })
+        }
+    }, [chatID])
 
     return (
         <>
@@ -14,12 +35,12 @@ export default function UserMessage(props) {
                             {
                                 props.role === "User" ? (
                                     <span className='  text-xs'>{props.date_send}</span>
-                                    ) : (
-                                        <span className='  text-xs'>{props.date_send?.slice(11, 16)}</span>
+                                ) : (
+                                    <span className='  text-xs'>{props.date_send?.slice(11, 16)}</span>
                                 )
                             }
                             {
-                                props.is_seen ? (
+                                isSeen ? (
                                     <IoCheckmarkDoneOutline className='  text-lg text-blue-100' />
                                 ) : (
                                     <IoCheckmarkOutline className='  text-lg text-blue-100' />
