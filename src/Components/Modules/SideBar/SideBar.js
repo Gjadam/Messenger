@@ -6,7 +6,7 @@ import { BiSolidPencil } from "react-icons/bi";
 import { IoClose } from 'react-icons/io5';
 import ContactAlert from '../ContactAlert/ContactAlert';
 import HeaderSideBar from '../HeaderSideBar/HeaderSideBar';
-export default function SideBar({ chats, closeSideBar }) {
+export default function SideBar({ chats, openChat }) {
     const [searchValue, setSearchValue] = useState('')
     const [searchData, setSearchData] = useState([])
     const [contacts, setContacts] = useState([])
@@ -59,7 +59,7 @@ export default function SideBar({ chats, closeSideBar }) {
                     {
                         chats.length ? (
                             chats.map(chat => (
-                                <div onClick={closeSideBar}>
+                                <div onClick={openChat}>
                                     <Contact key={chat.id} chatID={chat.id} userID={chat.target_user_id} username={chat.target_username} />
                                 </div>
                             ))
@@ -68,7 +68,7 @@ export default function SideBar({ chats, closeSideBar }) {
                         )
                     }
                 </div>
-                <div className=" group fixed left-6  bottom-6 z-50 p-3 rounded-full  bg-blue-600 dark:bg-zinc-700 dark:hover:bg-zinc-800 hover:bg-blue-700 cursor-pointer transition-colors " onClick={openContactsBox}>
+                <div className=" group fixed left-6  bottom-6 z-40 p-3 rounded-full  bg-blue-600 dark:bg-zinc-700 dark:hover:bg-zinc-800 hover:bg-blue-700 cursor-pointer transition-colors " onClick={openContactsBox}>
                     <div className=" flex justify-center items-center   ">
                         <div className="relative overflow-hidden p-3 flex justify-center items-center">
                             <div className={` absolute  ${isContactBoxOpen ? 'right-0' : '-right-8'}  transition-all ease-in-out`}>
@@ -94,7 +94,7 @@ export default function SideBar({ chats, closeSideBar }) {
                                     <div className=" rounded-xl mt-1  w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
                                         {
                                             searchData?.map(search => (
-                                                <div onClick={closeSideBar}>
+                                                <div onClick={openChat}>
                                                     <Contact key={search.id} userID={search.id} username={search.username} type={'search'} />
                                                 </div>
                                             ))
@@ -109,7 +109,7 @@ export default function SideBar({ chats, closeSideBar }) {
                         {
                             contacts.length ? (
                                 contacts.map(contact => (
-                                    <div onClick={closeSideBar}>
+                                    <div onClick={openChat}>
                                         <Contact key={contact.id} userID={contact.id} username={contact.username} />
                                     </div>
                                 ))
