@@ -29,7 +29,7 @@ export default function UserMessage(props) {
         <>
             <div className=" flex justify-end items-center ">
 
-                <div className=" flex items-center break-words max-w-96 min-w-4 rounded-s-xl overflow-hidden rounded-br-xl bg-blue-600 text-white text-wrap  px-3 py-4  my-2 ">
+                <div className=" flex items-center break-words max-w-96 min-w-4 rounded-s-2xl overflow-hidden rounded-tr-2xl bg-blue-600 text-white text-wrap  px-3 py-4  my-2 ">
                     <p>{props.text}
                         <div className="flex items-center mt-1 gap-1">
 

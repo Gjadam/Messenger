@@ -7,7 +7,7 @@ export default function ContactMessage(props) {
         <>
             <div className="flex justify-start items-center">
 
-                <div className="  break-words  max-w-96 self-end rounded-e-xl overflow-hidden rounded-bl-xl bg-zinc-600 text-white px-3 py-4 my-2 ">
+                <div className="  break-words  max-w-96 self-end rounded-e-2xl overflow-hidden rounded-tl-2xl bg-zinc-600 text-white px-3 py-4 my-2 ">
                     <p>{props.text}</p>
                     <div className="flex items-center mt-1 gap-1">
                         {
