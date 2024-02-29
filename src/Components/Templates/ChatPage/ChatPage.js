@@ -10,6 +10,7 @@ import UserMessage from '../../../Components/Modules/UserMessage/UserMessage';
 import ContactMessage from '../../../Components/Modules/ContactMessage/ContactMessage';
 import { MdKeyboard } from "react-icons/md";
 import { RiMessage3Fill } from "react-icons/ri";
+import { VscDebugDisconnect } from "react-icons/vsc";
 import { FaUser } from "react-icons/fa";
 import { MdEmojiEmotions } from "react-icons/md";
 import Picker from 'emoji-picker-react';
@@ -17,7 +18,7 @@ import { host, webSocketProtocol } from '../../../WebSockekConfig/WebSockekConfi
 import NotificationBtn from '../../../Components/Modules/NotificationBtn/NotificationBtn';
 
 
-export default function ChatPage({chatType}) {
+export default function ChatPage({ chatType }) {
 
     const authContext = useContext(AuthContext)
     const navigate = useNavigate()
@@ -26,6 +27,7 @@ export default function ChatPage({chatType}) {
     const [chatScrollTarget, setChatScrollTarget] = useState('')
     const [chatScrollTop, setChatScrollTop] = useState('')
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [isSocketDisconnect, setIsSocketDisconnect] = useState(false);
     const [notificationData, setNotificationData] = useState([])
     const [contactDatas, setContactDatas] = useState([])
     const [messages, setMessages] = useState([])
@@ -39,18 +41,29 @@ export default function ChatPage({chatType}) {
     const currentDate = new Date();
     const hours = currentDate.getHours();
     const minutes = currentDate.getMinutes();
+
     // Create Web Socket
+    const createNewWebSocket = () => {
+        window.location.reload();
+    }
+
     useEffect(() => {
-        if (targetUserID) {
-            const newWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/connect/${authContext.userInfos.id}/${targetUserID}`);
-            newWs.onmessage = (event) => {
-                const contactMessage = JSON.parse(JSON.parse(event.data))
-                setMessages(prevState => [...prevState, { role: "Contact", sender_id: contactMessage.sender_id, text: contactMessage.message, date_send: `${hours}:${minutes}` }]);
+        if (authContext.userInfos.id) {
+            if (targetUserID) {
+                const newWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/connect/${authContext.userInfos.id}/${targetUserID}`);
+                newWs.onmessage = (event) => {
+                    const contactMessage = JSON.parse(JSON.parse(event.data))
+                    setMessages(prevState => [...prevState, { role: "Contact", sender_id: contactMessage.sender_id, text: contactMessage.message, date_send: `${hours}:${minutes}` }]);
+                }
+                newWs.onopen = () => {
+                    setWs(newWs);
+                };
+
             }
-            newWs.onopen = () => {
-                setWs(newWs);
-            };
         }
+        ws.onclose = () => {
+            setIsSocketDisconnect(true)
+        };
     }, [targetUserID])
 
 
@@ -90,9 +103,11 @@ export default function ChatPage({chatType}) {
 
     // Notification
     useEffect(() => {
-        const newNotificationWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/notification/${authContext.userInfos.id}`);
-        newNotificationWs.onmessage = (event) => {
-            showNotificationHandler(JSON.parse(JSON.parse(event.data)))
+        if (authContext.userInfos.id) {
+            const newNotificationWs = new WebSocket(`${webSocketProtocol}://${host}/chats/server/notification/${authContext.userInfos.id}`);
+            newNotificationWs.onmessage = (event) => {
+                showNotificationHandler(JSON.parse(JSON.parse(event.data)))
+            }
         }
     }, [])
 
@@ -122,7 +137,7 @@ export default function ChatPage({chatType}) {
         chatPage.classList.remove("left-0")
     }
 
-   
+
 
     // Get Contact information from server
     useEffect(() => {
@@ -272,7 +287,7 @@ export default function ChatPage({chatType}) {
                                     <IoIosArrowDown className=' mt-1 text-3xl text-zinc-100 dark:text-blue-600' />
                                 </div>
                                 <input type="text" placeholder='Message' value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} className='  w-full p-4 h-full rounded-full mx-2  outline-none bg-white dark:bg-zinc-900 dark:text-white' />
-                                <button className={` flex justify-center items-center absolute right-4 bottom-4.5 z-10 ${inputMessage.length > 0 && 'bg-blue-600 text-white'} text-blue-600  rounded-full p-2   transition-colors`}>
+                                <button className={` flex justify-center items-center absolute right-3 bottom-4.5 z-10 ${inputMessage.length > 0 && 'bg-blue-600 text-white'} text-blue-600  rounded-full p-2   transition-colors`}>
                                     <IoMdSend className='   pl-1 text-2xl' />
                                 </button>
                             </form>
@@ -303,6 +318,20 @@ export default function ChatPage({chatType}) {
                         </div>
                     </div>
                     // End Notification message
+                }
+                {
+                    // Socket Disconnect Alert
+                    isSocketDisconnect &&
+                    <div className="fixed inset-0 bg-zinc-950 bg-opacity-90 z-50">
+                        <div className=' flex justify-center items-center text-zinc-100  text-center  flex-col h-full'>
+                            <VscDebugDisconnect className=' text-9xl   animate-pulse ' />
+                            <span className=' text-xl  '>Oops! Chat is disconnected</span>
+                            <span className=' mt-1 max-w-48 text-zinc-300 text-sm'>Please refresh the chat to reconnect.</span>
+                            <div className=" mt-2" onClick={createNewWebSocket}>
+                                <NotificationBtn text={'Refresh chat'} />
+                            </div>
+                        </div>
+                    </div>
                 }
             </div>
         </>
