@@ -21,7 +21,7 @@ export default function Index() {
                     setChats(data)
                 })
         }
-    }, [])
+    }, [chats])
 
 
     const openChat = () => {
@@ -53,8 +53,8 @@ export default function Index() {
                 </div>
                 {/* End Mobile version */}
                 <ChatPage chatType={'desktop'} />
-            </div >
 
+            </div >
         </>
     )
 }
