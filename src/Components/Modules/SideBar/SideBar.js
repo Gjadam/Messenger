@@ -51,6 +51,7 @@ export default function SideBar({ chats, openChat }) {
         setIsContactBoxOpen(!isContactBoxOpen)
     }
 
+
     return (
         <>
             <div className=" relative">
@@ -59,8 +60,8 @@ export default function SideBar({ chats, openChat }) {
                     {
                         chats.length ? (
                             chats.map(chat => (
-                                <div onClick={openChat}>
-                                    <Contact key={chat.id} chatID={chat.id} userID={chat.target_user_id} username={chat.target_username} />
+                                <div key={chat.id} onClick={openChat}>
+                                    <Contact  chatID={chat.id} userID={chat.target_user_id} username={chat.target_username} lastMessage={chat.last_message} />
                                 </div>
                             ))
                         ) : (
@@ -83,7 +84,7 @@ export default function SideBar({ chats, openChat }) {
                         <span className=' text-sm ml-1 inline-block select-none min-w-36 font-bold text-blue-600 dark:text-zinc-100'>{isContactBoxOpen ? 'Close' : 'New Message'} </span>
                     </div>
                 </div>
-                <div className={` absolute top-0 bottom-0 ${isContactBoxOpen ? " -left-0" : " -left-[50rem]"}    w-full  transition-all`}>
+                <div className={` absolute top-0 bottom-0 ${isContactBoxOpen ? " -left-0" : " -left-[50rem]"} w-full  transition-all`}>
                     <div className="bg-white dark:bg-zinc-900 w-full h-full">
 
                         <div className="  m-2">
@@ -94,8 +95,8 @@ export default function SideBar({ chats, openChat }) {
                                     <div className=" rounded-xl mt-1  w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
                                         {
                                             searchData?.map(search => (
-                                                <div onClick={openChat}>
-                                                    <Contact key={search.id} userID={search.id} username={search.username} type={'search'} />
+                                                <div key={search.id} onClick={openChat}>
+                                                    <Contact  userID={search.id} username={search.username} type={'search'} />
                                                 </div>
                                             ))
                                         }
@@ -109,8 +110,8 @@ export default function SideBar({ chats, openChat }) {
                         {
                             contacts.length ? (
                                 contacts.map(contact => (
-                                    <div onClick={openChat}>
-                                        <Contact key={contact.id} userID={contact.id} username={contact.username} />
+                                    <div key={contact.id} onClick={openChat}>
+                                        <Contact  userID={contact.id} username={contact.username} />
                                     </div>
                                 ))
                             ) : (
