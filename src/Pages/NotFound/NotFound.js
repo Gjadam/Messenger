@@ -1,7 +1,11 @@
-import React from 'react'
-import NavBar from '../../Components/Templates/NavBar/NavBar'
 import { Link } from 'react-router-dom'
+
+// Components
+import NavBar from '../../Components/Templates/NavBar/NavBar'
+
+// Icons
 import { IoIosHome } from "react-icons/io";
+
 export default function NotFoundNotFound() {
   return (
     <div className=' flex justify-center items-center w-full h-svh bg-bg-Notfound bg-no-repeat bg-center overflow-hidden'>

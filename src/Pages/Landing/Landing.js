@@ -1,10 +1,17 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
+import { Link } from 'react-router-dom';
+
+// Icons
 import { TbExternalLink } from "react-icons/tb";
 import { HiOutlineDownload } from "react-icons/hi";
 import { MdLogin } from "react-icons/md";
-import AuthContext from '../../context/authContext'
-import { Link } from 'react-router-dom';
+
+// Components
 import NavBar from '../../Components/Templates/NavBar/NavBar';
+
+// User info
+import AuthContext from '../../context/authContext'
+
 export default function Landing() {
 
     const authContext = useContext(AuthContext)

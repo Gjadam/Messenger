@@ -1,10 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
+import { NavLink } from 'react-router-dom';
+
+// Icons
 import { PiUserCircleFill } from "react-icons/pi";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { MdDataSaverOn } from "react-icons/md";
-import Swal from 'sweetalert2';
-import { NavLink } from 'react-router-dom';
+
+// User info
 import AuthContext from '../../../context/authContext';
+
+// SweetAlert
+import Swal from 'sweetalert2';
 
 export default function Contact({ chatID, userID, username, lastMessage, type }) {
 

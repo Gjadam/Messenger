@@ -1,4 +1,5 @@
-import React from 'react'
+
+// Icons
 import { RiChatOffLine } from "react-icons/ri";
 
 export default function ChatAlert() {

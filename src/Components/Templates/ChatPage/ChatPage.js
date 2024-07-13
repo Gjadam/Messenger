@@ -1,22 +1,31 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+
+// Icons
 import { PiUserCircleFill } from "react-icons/pi";
 import { IoMdSend } from "react-icons/io";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
-import { useNavigate, useParams } from 'react-router-dom';
-import AuthContext from '../../../context/authContext';
-import ChatAlert from '../../../Components/Modules/ChatAlert/ChatAlert';
-import UserMessage from '../../../Components/Modules/UserMessage/UserMessage';
-import ContactMessage from '../../../Components/Modules/ContactMessage/ContactMessage';
 import { MdKeyboard } from "react-icons/md";
 import { RiMessage3Fill } from "react-icons/ri";
 import { VscDebugDisconnect } from "react-icons/vsc";
 import { FaUser } from "react-icons/fa";
 import { MdEmojiEmotions } from "react-icons/md";
-import Picker from 'emoji-picker-react';
-import { host, webSocketProtocol } from '../../../WebSockekConfig/WebSockekConfig';
-import NotificationBtn from '../../../Components/Modules/NotificationBtn/NotificationBtn';
 
+// Web socket
+import { host, webSocketProtocol } from '../../../WebSockekConfig/WebSockekConfig';
+
+// Emoji picker
+import Picker from 'emoji-picker-react';
+
+// Components
+import NotificationBtn from '../../../Components/Modules/NotificationBtn/NotificationBtn';
+import ChatAlert from '../../../Components/Modules/ChatAlert/ChatAlert';
+import UserMessage from '../../../Components/Modules/UserMessage/UserMessage';
+import ContactMessage from '../../../Components/Modules/ContactMessage/ContactMessage';
+
+// User info
+import AuthContext from '../../../context/authContext';
 
 export default function ChatPage({ chatType }) {
 

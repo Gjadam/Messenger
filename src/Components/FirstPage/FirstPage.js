@@ -1,8 +1,11 @@
-import React, { useContext } from 'react'
-import AuthContext from '../../context/authContext'
+import { useContext } from 'react'
+
+// Components
 import Index from '../../Pages/Index/Index'
 import Landing from '../../Pages/Landing/Landing'
-import { useNavigate } from 'react-router-dom'
+
+// User infos
+import AuthContext from '../../context/authContext'
 
 export default function FirstPage() {
     const authContext = useContext(AuthContext)

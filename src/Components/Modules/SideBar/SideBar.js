@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import Contact from '../Contact/Contact'
+import { useEffect, useState } from 'react'
+
+// Icons
 import { PiChatsCircleDuotone } from "react-icons/pi";
 import { RiContactsBookFill } from "react-icons/ri";
 import { BiSolidPencil } from "react-icons/bi";
 import { IoClose } from 'react-icons/io5';
+
+// Components
+import Contact from '../Contact/Contact'
 import ContactAlert from '../ContactAlert/ContactAlert';
 import HeaderSideBar from '../HeaderSideBar/HeaderSideBar';
+
 export default function SideBar({ chats, openChat }) {
     const [searchValue, setSearchValue] = useState('')
     const [searchData, setSearchData] = useState([])

@@ -1,9 +1,17 @@
-import React, { useContext } from 'react'
-import AuthContext from '../../context/authContext'
-import { useFormik } from 'formik'
-import Swal from 'sweetalert2'
+import { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+
+// SweetAlert
+import Swal from 'sweetalert2'
+
+// Components
 import FormIntroduction from '../../Components/Modules/FormIntroduction/FormIntroduction'
+
+// Formik
+import { useFormik } from 'formik'
+
+// User info
+import AuthContext from '../../context/authContext'
 
 export default function Login() {
 

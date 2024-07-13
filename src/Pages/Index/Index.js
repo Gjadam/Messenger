@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+
+// Components
 import NavBarChat from '../../Components/Modules/NavBarChat/NavBarChat'
-import { IoClose } from "react-icons/io5";
 import SideBar from '../../Components/Modules/SideBar/SideBar';
 import ChatPage from '../../Components/Templates/ChatPage/ChatPage';
+
 export default function Index() {
 
     const [chats, setChats] = useState([])

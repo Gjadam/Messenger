@@ -1,8 +1,16 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+
+// User info
 import AuthContext from '../../context/authContext'
+
+// Formik
 import { useFormik } from 'formik'
+
+// SweetAlert
 import Swal from 'sweetalert2'
+
+// Components
 import FormIntroduction from '../../Components/Modules/FormIntroduction/FormIntroduction'
 
 

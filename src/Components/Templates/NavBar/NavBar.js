@@ -1,11 +1,18 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
+import { Link } from 'react-router-dom';
+
+// Components
 import LandingNavItem from '../../Modules/LandingNavItem/LandingNavItem'
+
+// User info
 import AuthContext from '../../../context/authContext'
+
+// Icons
 import { MdLogin } from 'react-icons/md'
 import { BiSolidPencil } from "react-icons/bi";
 import { TbExternalLink } from 'react-icons/tb';
 import { RiLogoutCircleRLine } from "react-icons/ri";
-import { Link } from 'react-router-dom';
+
 export default function NavBar() {
 
   const authContext = useContext(AuthContext)

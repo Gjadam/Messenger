@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+
+// Icons
 import { LuUser2 } from "react-icons/lu";
 import { FiMoreVertical } from "react-icons/fi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { IoMdSettings } from "react-icons/io";
-import { Link, useNavigate } from 'react-router-dom';
 import { IoIosMoon } from "react-icons/io";
 import { GrSun } from "react-icons/gr";
-import { PiBatteryChargingFill } from "react-icons/pi";
-import { PiBatteryFullFill } from "react-icons/pi";
-import { PiBatteryMediumFill } from "react-icons/pi";
+
 import AuthContext from '../../../context/authContext';
 export default function NavBar() {
 

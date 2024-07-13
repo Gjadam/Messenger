@@ -1,7 +1,12 @@
-import React, { useContext } from 'react'
-import { RiArrowDropRightLine } from "react-icons/ri";
+import { useContext } from 'react'
 import { Link } from 'react-router-dom';
+
+// Icons
+import { RiArrowDropRightLine } from "react-icons/ri";
+
+// User info
 import AuthContext from '../../../context/authContext';
+
 export default function LandingNavItem({ text, icon, href }) {
 
     const authContext = useContext(AuthContext)
